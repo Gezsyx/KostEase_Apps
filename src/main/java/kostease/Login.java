@@ -198,13 +198,14 @@ public class Login extends javax.swing.JFrame {
                 this.setVisible(false); 
                 
                 //
-                Dashboard DS = new Dashboard();
+                Dashboard1 DS = new Dashboard1();
                 DS.setVisible(true);
                 DS.setExtendedState(Frame.MAXIMIZED_BOTH); 
             }else {
                 System.err.println("Akun tidak ditemukan");
             }
         } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Terjadi error:\n" + e.getMessage());
         }
         
         
