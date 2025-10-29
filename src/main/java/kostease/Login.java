@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import util.Koneksi;
-//import kelasc.util.Pegawai;
+import util.Users;
 
 /**
  *
@@ -62,7 +62,6 @@ public class Login extends javax.swing.JFrame {
 
         txtPassword.setBackground(new java.awt.Color(113, 82, 46));
         txtPassword.setForeground(new java.awt.Color(255, 255, 255));
-        txtPassword.setText("jPasswordField1");
         txtPassword.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -190,17 +189,24 @@ public class Login extends javax.swing.JFrame {
                     + "password='"+pwd+"'";
             ResultSet RS = ST.executeQuery(Q);
             int n = 0;
+            Users Us = new Users();
             while (RS.next()) {                
                 n++;
+                Us.setId(RS.getInt("id_admin"));
+                Us.setNama(RS.getString("nama"));
+                Us.setEmail(RS.getString("email"));
+                Us.setUsername(RS.getString("username"));
+                Us.setPassword(RS.getString("password"));
             }
             if(n>0){
                 //System.out.println("Akun ditemukan");
                 this.setVisible(false); 
                 
                 //
-                Dashboard1 DS = new Dashboard1();
-                DS.setVisible(true);
-                DS.setExtendedState(Frame.MAXIMIZED_BOTH); 
+                DashboardAdmin DA = new DashboardAdmin();
+                DA.P = Us;
+                DA.setVisible(true);
+                DA.setExtendedState(Frame.MAXIMIZED_BOTH); 
             }else {
                 System.err.println("Akun tidak ditemukan");
             }
