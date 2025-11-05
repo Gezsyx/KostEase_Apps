@@ -8,9 +8,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
-import kostease.AddNewUser;
+import dialogs.AddNewUser;
+import dialogs.EditDataUser;
 import util.Koneksi;
 import util.Users;
+import dialogs.DeleteDataUsers;
 
 /**
  *
@@ -25,7 +27,7 @@ public class ManageUsers extends javax.swing.JPanel {
      */
     public ManageUsers() {
         initComponents();
-        refreshData();
+        refreshData("");
     }
 
     /**
@@ -86,6 +88,11 @@ public class ManageUsers extends javax.swing.JPanel {
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("DELETE");
         jButton3.setEnabled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(255, 204, 0));
         jButton4.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -193,6 +200,13 @@ public class ManageUsers extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (jTable1.getSelectedRow() != -1) {
+            EditDataUser em = new EditDataUser(null, true);
+            em.P = Px;
+            em.setVisible(true);
+        } else {
+            //
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -210,14 +224,16 @@ public class ManageUsers extends javax.swing.JPanel {
             Px = new Users();
             String IDusr = jTable1.getValueAt(n, 0).toString();
             int ID = Integer.valueOf(IDusr);
-            String nama = jTable1.getValueAt(n, 1).toString();
-            String jabatan = jTable1.getValueAt(n, 2).toString();
-            String username = jTable1.getValueAt(n, 3).toString();
-            String password = jTable1.getValueAt(n, 4).toString();
+            String username = jTable1.getValueAt(n, 1).toString();
+            String nama = jTable1.getValueAt(n, 2).toString();
+            String jabatan = jTable1.getValueAt(n, 3).toString();
+            String email = jTable1.getValueAt(n, 4).toString();
+            String password = jTable1.getValueAt(n, 5).toString();
             Px.setId(ID);
+            Px.setUsername(username);
             Px.setNama(nama);
             Px.setJabatan(jabatan);
-            Px.setUsername(username);
+            Px.setEmail(email);
             Px.setPassword(password);
 
         }        // TODO add your handling code here:
@@ -226,12 +242,23 @@ public class ManageUsers extends javax.swing.JPanel {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
-        jTable1.clearSelection();        // TODO add your handling code here:
+        jTable1.clearSelection();
+        refreshData("");
+        txtSearch.setText("");
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
-        searchDataUser();        // TODO add your handling code here:
+        searchDataUser();
+// TODO add your handling code here:
     }//GEN-LAST:event_txtSearchKeyReleased
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        DeleteDataUsers dm = new DeleteDataUsers(null, true);
+        dm.P = Px;
+        dm.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -249,7 +276,7 @@ public class ManageUsers extends javax.swing.JPanel {
     private javax.swing.JPanel utama;
     // End of variables declaration//GEN-END:variables
 
-    public static void refreshData() {
+    public static void refreshData(String w) {
         try {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             for (int i = model.getRowCount() - 1; i >= 0; i--) {
@@ -257,7 +284,7 @@ public class ManageUsers extends javax.swing.JPanel {
             }
 
             Connection K = Koneksi.Go();
-            String Q = "SELECT * FROM admin";
+            String Q = "SELECT * FROM admin" + w;
             Statement S = K.createStatement();
             ResultSet R = S.executeQuery(Q);
             while (R.next()) {
@@ -280,11 +307,12 @@ public class ManageUsers extends javax.swing.JPanel {
         String key = txtSearch.getText();
         String where = " WHERE "
                 + "id_admin LIKE '%" + key + "%' OR "
+                + "username LIKE '%" + key + "%' OR "
                 + "nama LIKE '%" + key + "%' OR "
                 + "jabatan LIKE '%" + key + "%' OR "
-                + "username LIKE '%" + key + "%' OR "
+                + "email LIKE '%" + key + "%' OR "
                 + "password LIKE '%" + key + "%'";
-        refreshData();
+        refreshData(where);
     }
 
 }

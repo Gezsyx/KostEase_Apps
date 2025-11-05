@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package kostease;
+package dialogs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -63,7 +63,7 @@ public class AddNewUser extends javax.swing.JDialog {
         jLabel2.setText("Username     :");
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel3.setText("Paassword  :");
+        jLabel3.setText("Password  :");
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel4.setText("Email              :");
@@ -232,7 +232,7 @@ public class AddNewUser extends javax.swing.JDialog {
             PS.setString(5, password);
             PS.executeUpdate();
 
-            ManageUsers.refreshData();
+            ManageUsers.refreshData("");
             this.setVisible(false);
 
             JOptionPane.showMessageDialog(null, "Data berhasil disimpan");

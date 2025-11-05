@@ -9,7 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 import javax.swing.JPanel;
 import panels.ManageUsers;
-import kostease.Profil;
+import dialogs.Profil;
 
 /**
  *
