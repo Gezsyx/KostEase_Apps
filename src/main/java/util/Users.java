@@ -14,7 +14,16 @@ public class Users {
     private String email;
     private String username;
     private String password;
+    private String jabatan;
+    
+    public String getJabatan() {
+        return jabatan;
+    }
 
+    public void setJabatan(String jabatan) {
+        this.jabatan = jabatan;
+    }
+    
     public int getId() {
         return id_admin;
     }

@@ -4,17 +4,28 @@
  */
 package panels;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
+import kostease.AddNewUser;
+import util.Koneksi;
+import util.Users;
+
 /**
  *
  * @author ASUS
  */
 public class ManageUsers extends javax.swing.JPanel {
 
+    Users Px;
+
     /**
      * Creates new form ManageUsers
      */
     public ManageUsers() {
         initComponents();
+        refreshData();
     }
 
     /**
@@ -34,7 +45,7 @@ public class ManageUsers extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JTextField();
         contain = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -53,28 +64,50 @@ public class ManageUsers extends javax.swing.JPanel {
         jButton1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("ADD");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(0, 153, 255));
         jButton2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("EDIT");
+        jButton2.setEnabled(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(255, 51, 51));
         jButton3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("DELETE");
+        jButton3.setEnabled(false);
 
-        jButton4.setBackground(new java.awt.Color(204, 204, 204));
+        jButton4.setBackground(new java.awt.Color(255, 204, 0));
         jButton4.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("REFRESH");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jTextField1.setText("Search....");
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 40));
+        txtSearch.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtSearch.setText("Search....");
+        txtSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchKeyReleased(evt);
+            }
+        });
+        jPanel1.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 40));
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
@@ -83,7 +116,9 @@ public class ManageUsers extends javax.swing.JPanel {
             .addGroup(headerLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(headerLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(1444, Short.MAX_VALUE))
                     .addGroup(headerLayout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
@@ -93,8 +128,8 @@ public class ManageUsers extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jButton4)
                         .addGap(894, 894, 894)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,21 +155,19 @@ public class ManageUsers extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "id_admin", "nama", "username", "email", "password"
+                "id_admin", "username", "nama", "jabatan", "email", "password"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+        ));
+        jTable1.setRowHeight(40);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -143,17 +176,62 @@ public class ManageUsers extends javax.swing.JPanel {
         contain.setLayout(containLayout);
         containLayout.setHorizontalGroup(
             containLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1610, Short.MAX_VALUE)
+            .addGap(0, 1610, Short.MAX_VALUE)
+            .addGroup(containLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1610, Short.MAX_VALUE))
         );
         containLayout.setVerticalGroup(
             containLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
+            .addGap(0, 705, Short.MAX_VALUE)
+            .addGroup(containLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE))
         );
 
         utama.add(contain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, -1));
 
         add(utama, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        AddNewUser NU = new AddNewUser(null, true);
+        NU.setVisible(true);         // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int n = jTable1.getSelectedRow();
+        if (n != -1) {
+            jButton2.setEnabled(true);
+            jButton3.setEnabled(true);
+            //ekstraksi data
+            Px = new Users();
+            String IDusr = jTable1.getValueAt(n, 0).toString();
+            int ID = Integer.valueOf(IDusr);
+            String nama = jTable1.getValueAt(n, 1).toString();
+            String jabatan = jTable1.getValueAt(n, 2).toString();
+            String username = jTable1.getValueAt(n, 3).toString();
+            String password = jTable1.getValueAt(n, 4).toString();
+            Px.setId(ID);
+            Px.setNama(nama);
+            Px.setJabatan(jabatan);
+            Px.setUsername(username);
+            Px.setPassword(password);
+
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        jButton2.setEnabled(false);
+        jButton3.setEnabled(false);
+        jTable1.clearSelection();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        searchDataUser();        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -166,8 +244,47 @@ public class ManageUsers extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private static javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtSearch;
     private javax.swing.JPanel utama;
     // End of variables declaration//GEN-END:variables
+
+    public static void refreshData() {
+        try {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            for (int i = model.getRowCount() - 1; i >= 0; i--) {
+                model.removeRow(i);
+            }
+
+            Connection K = Koneksi.Go();
+            String Q = "SELECT * FROM admin";
+            Statement S = K.createStatement();
+            ResultSet R = S.executeQuery(Q);
+            while (R.next()) {
+                int id = R.getInt("id_admin");
+                String username = R.getString("username");
+                String nama = R.getString("nama");
+                String jabatan = R.getString("jabatan");
+                String email = R.getString("email");
+                String password = R.getString("password");
+                Object[] datausers = {id, username, nama, jabatan, email, password};
+                model.addRow(datausers);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private void searchDataUser() {
+        String key = txtSearch.getText();
+        String where = " WHERE "
+                + "id_admin LIKE '%" + key + "%' OR "
+                + "nama LIKE '%" + key + "%' OR "
+                + "jabatan LIKE '%" + key + "%' OR "
+                + "username LIKE '%" + key + "%' OR "
+                + "password LIKE '%" + key + "%'";
+        refreshData();
+    }
+
 }

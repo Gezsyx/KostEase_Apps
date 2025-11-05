@@ -174,8 +174,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Profil NU = new Profil(null, true);
-        NU.setVisible(true);         // TODO add your handling code here:
+        Profil PF = new Profil(null, true);
+        PF.setVisible(true);         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -186,7 +186,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        jLabel2.setText(P.getNama());         // TODO add your handling code here:
+        jLabel2.setText(P.getUsername());         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
     /**
