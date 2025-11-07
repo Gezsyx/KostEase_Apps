@@ -54,6 +54,7 @@ public class MangeKamar extends javax.swing.JPanel {
         jButton1.setBackground(new java.awt.Color(0, 153, 255));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Edit");
+        jButton1.setEnabled(false);
         jButton1.setPreferredSize(new java.awt.Dimension(72, 26));
 
         jButton2.setBackground(new java.awt.Color(0, 255, 0));
@@ -69,6 +70,7 @@ public class MangeKamar extends javax.swing.JPanel {
         jButton3.setBackground(new java.awt.Color(255, 51, 51));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("DELETE");
+        jButton3.setEnabled(false);
         jButton3.setPreferredSize(new java.awt.Dimension(82, 26));
 
         jButton4.setBackground(new java.awt.Color(255, 204, 0));
