@@ -122,7 +122,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         });
 
         jButton2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jButton2.setText("Manage Rooms");
+        jButton2.setText("Manage Kamar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
