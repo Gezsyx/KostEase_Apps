@@ -75,6 +75,11 @@ public class AddNewUser extends javax.swing.JDialog {
         jLabel6.setText("Nama             :");
 
         jButton1.setText("Batal");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Simpan");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -157,6 +162,11 @@ public class AddNewUser extends javax.swing.JDialog {
         simpanData();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -232,7 +242,7 @@ public class AddNewUser extends javax.swing.JDialog {
             PS.setString(5, password);
             PS.executeUpdate();
 
-            ManageUsers.refreshData("");
+            ManageUsers.refreshDataUsers("");
             this.setVisible(false);
 
             JOptionPane.showMessageDialog(null, "Data berhasil disimpan");

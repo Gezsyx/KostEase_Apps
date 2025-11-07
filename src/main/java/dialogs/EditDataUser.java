@@ -277,7 +277,7 @@ public class EditDataUser extends javax.swing.JDialog {
             PS.executeUpdate();
 
             //refresh data
-            ManageUsers.refreshData("");
+            ManageUsers.refreshDataUsers("");
             this.setVisible(false);
 
             JOptionPane.showMessageDialog(null, "Berhasil merubah data");

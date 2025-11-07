@@ -4,6 +4,12 @@
  */
 package dialogs;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+import panels.ManageKamar;
+import util.Koneksi;
+
 /**
  *
  * @author FAIZAL ISMAN
@@ -31,17 +37,15 @@ public class AddKamar extends javax.swing.JDialog {
 
         utama = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtUsername = new javax.swing.JTextField();
-        txtNama = new javax.swing.JTextField();
-        txtEmail = new javax.swing.JTextField();
+        txtNo = new javax.swing.JTextField();
+        txtHarga = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        txtJabatan = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
+        txtStatus = new javax.swing.JComboBox<>();
+        txtTipe = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -51,9 +55,6 @@ public class AddKamar extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Tambah Kamar");
-
-        jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel2.setText("Id Kamar         :");
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel3.setText("Status             :");
@@ -67,9 +68,9 @@ public class AddKamar extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel6.setText("No Kamar        :");
 
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+        txtHarga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
+                txtHargaActionPerformed(evt);
             }
         });
 
@@ -80,20 +81,25 @@ public class AddKamar extends javax.swing.JDialog {
             }
         });
 
-        txtJabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TERISI", "KOSONG" }));
-        txtJabatan.addActionListener(new java.awt.event.ActionListener() {
+        txtStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TERISI", "TERSEDIA" }));
+        txtStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtJabatanActionPerformed(evt);
+                txtStatusActionPerformed(evt);
             }
         });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtTipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtTipeActionPerformed(evt);
             }
         });
 
         jButton2.setText("Batal");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout utamaLayout = new javax.swing.GroupLayout(utama);
         utama.setLayout(utamaLayout);
@@ -104,18 +110,16 @@ public class AddKamar extends javax.swing.JDialog {
                 .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(utamaLayout.createSequentialGroup()
                         .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
                             .addComponent(jLabel4)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNama, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                            .addComponent(txtUsername)
-                            .addComponent(txtEmail)
-                            .addComponent(txtJabatan, javax.swing.GroupLayout.Alignment.TRAILING, 0, 179, Short.MAX_VALUE)
-                            .addComponent(jTextField1)))
+                            .addComponent(txtNo, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                            .addComponent(txtHarga)
+                            .addComponent(txtStatus, javax.swing.GroupLayout.Alignment.TRAILING, 0, 179, Short.MAX_VALUE)
+                            .addComponent(txtTipe)))
                     .addGroup(utamaLayout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -132,31 +136,27 @@ public class AddKamar extends javax.swing.JDialog {
             .addGroup(utamaLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(65, 65, 65)
                 .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTipe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(31, 31, 31)
                 .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtJabatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
-                .addGap(65, 65, 65))
+                .addGap(103, 103, 103))
         );
 
         getContentPane().add(utama, java.awt.BorderLayout.CENTER);
@@ -164,21 +164,27 @@ public class AddKamar extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtJabatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtJabatanActionPerformed
+    private void txtStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtJabatanActionPerformed
+    }//GEN-LAST:event_txtStatusActionPerformed
 
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+    private void txtHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHargaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
+    }//GEN-LAST:event_txtHargaActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtTipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTipeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtTipeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        simpanDataKamar();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,16 +227,48 @@ public class AddKamar extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JComboBox<String> txtJabatan;
-    private javax.swing.JTextField txtNama;
-    private javax.swing.JTextField txtUsername;
+    private javax.swing.JTextField txtHarga;
+    private javax.swing.JTextField txtNo;
+    private javax.swing.JComboBox<String> txtStatus;
+    private javax.swing.JTextField txtTipe;
     private javax.swing.JPanel utama;
     // End of variables declaration//GEN-END:variables
+
+        private void simpanDataKamar() {
+        try {
+            String no_kamar = txtNo.getText();
+            String tipe = txtTipe.getText();
+            String harga = txtHarga.getText();
+            String status = txtStatus.getSelectedItem().toString();
+
+            Connection K = Koneksi.Go();
+            String sql = "INSERT INTO kamar "
+                    + "(no_kamar,tipe_kamar, harga, status) "
+                    + "VALUES "
+                    + "(?,?,?,?)";
+            PreparedStatement PS = K.prepareStatement(sql);
+            PS.setString(1, no_kamar);
+            PS.setString(2, tipe);
+            PS.setString(3, harga);
+            PS.setString(4, status);
+            PS.executeUpdate();
+
+            ManageKamar.refreshDataKamar("");
+            this.setVisible(false);
+
+            JOptionPane.showMessageDialog(null, "Data berhasil disimpan");
+
+        } catch (Exception e) {
+            //error handling
+            System.err.println(""
+                    + "Lokasi: " + getClass() + ""
+                    + "Method: @simpanData()"
+                    + "Error: " + e.getMessage());
+        }
+    }
+    
 }

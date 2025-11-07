@@ -131,7 +131,7 @@ public class DeleteDataUsers extends javax.swing.JDialog {
             PS.executeUpdate();
 
             //refresh data
-            ManageUsers.refreshData("");
+            ManageUsers.refreshDataUsers("");
             this.setVisible(false);
 
             JOptionPane.showMessageDialog(null, "Berhasil menghapus data");

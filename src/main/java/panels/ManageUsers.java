@@ -27,7 +27,7 @@ public class ManageUsers extends javax.swing.JPanel {
      */
     public ManageUsers() {
         initComponents();
-        refreshData("");
+        refreshDataUsers("");
     }
 
     /**
@@ -106,7 +106,7 @@ public class ManageUsers extends javax.swing.JPanel {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtSearch.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtSearch.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
         txtSearch.setText("Search...");
         txtSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtSearch.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -253,7 +253,7 @@ public class ManageUsers extends javax.swing.JPanel {
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jTable1.clearSelection();
-        refreshData("");
+        refreshDataUsers("");
         txtSearch.setText("Search...");
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -295,7 +295,7 @@ public class ManageUsers extends javax.swing.JPanel {
     private javax.swing.JPanel utama;
     // End of variables declaration//GEN-END:variables
 
-    public static void refreshData(String w) {
+    public static void refreshDataUsers(String w) {
         try {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             for (int i = model.getRowCount() - 1; i >= 0; i--) {
@@ -331,7 +331,7 @@ public class ManageUsers extends javax.swing.JPanel {
                 + "jabatan LIKE '%" + key + "%' OR "
                 + "email LIKE '%" + key + "%' OR "
                 + "password LIKE '%" + key + "%'";
-        refreshData(where);
+        refreshDataUsers(where);
     }
 
 }

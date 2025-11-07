@@ -4,11 +4,20 @@
  */
 package dialogs;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+import panels.ManageKamar;
+import util.Kamar;
+import util.Koneksi;
+
 /**
  *
  * @author ASUS
  */
 public class DeleteDataKamar extends javax.swing.JDialog {
+    
+    public Kamar Kd;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DeleteDataKamar.class.getName());
 
@@ -36,6 +45,11 @@ public class DeleteDataKamar extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 51, 51));
         jPanel1.setForeground(new java.awt.Color(255, 51, 51));
@@ -49,9 +63,19 @@ public class DeleteDataKamar extends javax.swing.JDialog {
 
         jButton1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jButton1.setText("Simpan");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jButton2.setText("Batal");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -62,7 +86,7 @@ public class DeleteDataKamar extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 10, Short.MAX_VALUE)
+                        .addGap(0, 34, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -89,6 +113,42 @@ public class DeleteDataKamar extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+                try {
+            Connection K = Koneksi.Go();
+            String sql = "DELETE FROM kamar WHERE "
+                    + "id_kamar=?";
+            PreparedStatement PS = K.prepareStatement(sql);
+            PS.setInt(1, Kd.getId());
+            PS.executeUpdate();
+
+            //refresh data
+            ManageKamar.refreshDataKamar("");
+            this.setVisible(false);
+
+            JOptionPane.showMessageDialog(null, "Berhasil menghapus data");
+
+        } catch (Exception e) {
+            //error handling
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        jLabel1.setText(""
+                + "<html>"
+                + "<p>Apakah Anda yakin ingin menghapus data Kamar No. "
+                + " " + Kd.getNoKamar() + "?</p>"
+                + "</html>"
+                + "");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

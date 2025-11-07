@@ -10,6 +10,7 @@ import java.awt.Frame;
 import javax.swing.JPanel;
 import panels.ManageUsers;
 import dialogs.Profil;
+import panels.ManageKamar;
 
 /**
  *
@@ -170,6 +171,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+                AddViews(new ManageKamar()); 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 

@@ -4,17 +4,30 @@
  */
 package panels;
 
+import dialogs.AddKamar;
+import dialogs.DeleteDataKamar;
+import dialogs.EditDataKamar;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
+import util.Koneksi;
+import util.Kamar;
+
 /**
  *
  * @author USER
  */
-public class MangeKamar extends javax.swing.JPanel {
+public class ManageKamar extends javax.swing.JPanel {
+
+    Kamar Dk;
 
     /**
      * Creates new form MangeKamar
      */
-    public MangeKamar() {
+    public ManageKamar() {
         initComponents();
+        refreshDataKamar("");
     }
 
     /**
@@ -34,7 +47,7 @@ public class MangeKamar extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JTextField();
         contain = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -52,12 +65,19 @@ public class MangeKamar extends javax.swing.JPanel {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setBackground(new java.awt.Color(0, 153, 255));
+        jButton1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Edit");
         jButton1.setEnabled(false);
         jButton1.setPreferredSize(new java.awt.Dimension(72, 26));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(0, 255, 0));
+        jButton2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("ADD");
         jButton2.setPreferredSize(new java.awt.Dimension(72, 26));
@@ -68,19 +88,41 @@ public class MangeKamar extends javax.swing.JPanel {
         });
 
         jButton3.setBackground(new java.awt.Color(255, 51, 51));
+        jButton3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("DELETE");
         jButton3.setEnabled(false);
         jButton3.setPreferredSize(new java.awt.Dimension(82, 26));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(255, 204, 0));
+        jButton4.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("REFRESH");
         jButton4.setPreferredSize(new java.awt.Dimension(82, 26));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
-        jTextField1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jTextField1.setText("Search");
-        jTextField1.setPreferredSize(new java.awt.Dimension(62, 21));
+        txtSearch.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
+        txtSearch.setText("Search...");
+        txtSearch.setPreferredSize(new java.awt.Dimension(62, 21));
+        txtSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtSearchMouseClicked(evt);
+            }
+        });
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
@@ -99,12 +141,12 @@ public class MangeKamar extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(909, 909, 909)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, headerLayout.createSequentialGroup()
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(864, 864, 864)
+                                .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(headerLayout.createSequentialGroup()
                                 .addGap(1271, 1271, 1271)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 31, Short.MAX_VALUE))))
@@ -123,7 +165,7 @@ public class MangeKamar extends javax.swing.JPanel {
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(headerLayout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(txtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
@@ -134,6 +176,7 @@ public class MangeKamar extends javax.swing.JPanel {
         contain.setBackground(new java.awt.Color(204, 0, 204));
         contain.setPreferredSize(new java.awt.Dimension(1610, 705));
 
+        jTable1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -145,6 +188,12 @@ public class MangeKamar extends javax.swing.JPanel {
                 "id_kamar", "no_kamar", "tipe_kamar", "harga", "status"
             }
         ));
+        jTable1.setPreferredSize(new java.awt.Dimension(450, 160));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout containLayout = new javax.swing.GroupLayout(contain);
@@ -164,8 +213,70 @@ public class MangeKamar extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        AddKamar NK = new AddKamar(null, true);
+        NK.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        jButton2.setEnabled(false);
+        jButton3.setEnabled(false);
+        jTable1.clearSelection();
+        refreshDataKamar("");
+        txtSearch.setText("Search...");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int n = jTable1.getSelectedRow();
+        if (n != -1) {
+            jButton1.setEnabled(true);
+            jButton3.setEnabled(true);
+            //ekstraksi data
+            Dk = new Kamar();
+            String IDusr = jTable1.getValueAt(n, 0).toString();
+            int ID = Integer.valueOf(IDusr);
+            String no_kamar = jTable1.getValueAt(n, 1).toString();
+            String tipe_kamar = jTable1.getValueAt(n, 2).toString();
+            String harga = jTable1.getValueAt(n, 3).toString();
+            String status = jTable1.getValueAt(n, 4).toString();
+            Dk.setId(ID);
+            Dk.setNoKamar(no_kamar);
+            Dk.setTipe(tipe_kamar);
+            Dk.setHarga(harga);
+            Dk.setStatus(status);
+
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (jTable1.getSelectedRow() != -1) {
+            EditDataKamar em = new EditDataKamar(null, true);
+            em.K = Dk;
+            em.setVisible(true);
+        } else {
+            //
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        DeleteDataKamar dm = new DeleteDataKamar(null, true);
+        dm.Kd = Dk;
+        dm.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSearchMouseClicked
+        txtSearch.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchMouseClicked
+
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        searchDataKamar();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -178,8 +289,46 @@ public class MangeKamar extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private static javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtSearch;
     private javax.swing.JPanel utama;
     // End of variables declaration//GEN-END:variables
+
+    public static void refreshDataKamar(String w) {
+        try {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            for (int i = model.getRowCount() - 1; i >= 0; i--) {
+                model.removeRow(i);
+            }
+
+            Connection K = Koneksi.Go();
+            String Q = "SELECT * FROM kamar" + w;
+            Statement S = K.createStatement();
+            ResultSet R = S.executeQuery(Q);
+            while (R.next()) {
+                int id = R.getInt("id_kamar");
+                String noKamar = R.getString("no_kamar");
+                String tipeKamar = R.getString("tipe_kamar");
+                String harga = R.getString("harga");
+                String status = R.getString("status");
+                Object[] datausers = {id, noKamar, tipeKamar, harga, status};
+                model.addRow(datausers);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private void searchDataKamar() {
+        String key = txtSearch.getText();
+        String where = " WHERE "
+                + "id_kamar LIKE '%" + key + "%' OR "
+                + "no_kamar LIKE '%" + key + "%' OR "
+                + "tipe_kamar LIKE '%" + key + "%' OR "
+                + "harga LIKE '%" + key + "%' OR "
+                + "status LIKE '%" + key + "%'";
+        refreshDataKamar(where);
+    }
+
 }
