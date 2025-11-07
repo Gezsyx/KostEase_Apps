@@ -9,7 +9,7 @@ package util;
  * @author ASUS
  */
 public class Users {
-    private int id_admin;
+    private int id_user;
     private String nama;
     private String email;
     private String username;
@@ -18,11 +18,11 @@ public class Users {
     
     
     public int getId() {
-        return id_admin;
+        return id_user;
     }
 
     public void setId(int id) {
-        this.id_admin = id;
+        this.id_user = id;
     }
 
     public String getUsername() {

@@ -183,7 +183,7 @@ public class Login extends javax.swing.JFrame {
         try {
             Connection K = Koneksi.Go();
             Statement ST = K.createStatement();
-            String Q = "SELECT * FROM admin "
+            String Q = "SELECT * FROM user "
                     + "WHERE "
                     + "username='"+usr+"' AND "
                     + "password='"+pwd+"'";
@@ -192,10 +192,11 @@ public class Login extends javax.swing.JFrame {
             Users Us = new Users();
             while (RS.next()) {                
                 n++;
-                Us.setId(RS.getInt("id_admin"));
-                Us.setNama(RS.getString("nama"));
-                Us.setEmail(RS.getString("email"));
+                Us.setId(RS.getInt("id_user"));
                 Us.setUsername(RS.getString("username"));
+                Us.setNama(RS.getString("nama"));
+                Us.setJabatan(RS.getString("jabatan"));
+                Us.setEmail(RS.getString("email"));
                 Us.setPassword(RS.getString("password"));
             }
             if(n>0){

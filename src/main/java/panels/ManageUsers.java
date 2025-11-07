@@ -107,8 +107,18 @@ public class ManageUsers extends javax.swing.JPanel {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtSearch.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtSearch.setText("Search....");
+        txtSearch.setText("Search...");
         txtSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtSearchMouseClicked(evt);
+            }
+        });
+        txtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchActionPerformed(evt);
+            }
+        });
         txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSearchKeyReleased(evt);
@@ -244,7 +254,7 @@ public class ManageUsers extends javax.swing.JPanel {
         jButton3.setEnabled(false);
         jTable1.clearSelection();
         refreshData("");
-        txtSearch.setText("");
+        txtSearch.setText("Search...");
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -259,6 +269,15 @@ public class ManageUsers extends javax.swing.JPanel {
         dm.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void txtSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSearchMouseClicked
+        txtSearch.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -284,11 +303,11 @@ public class ManageUsers extends javax.swing.JPanel {
             }
 
             Connection K = Koneksi.Go();
-            String Q = "SELECT * FROM admin" + w;
+            String Q = "SELECT * FROM user" + w;
             Statement S = K.createStatement();
             ResultSet R = S.executeQuery(Q);
             while (R.next()) {
-                int id = R.getInt("id_admin");
+                int id = R.getInt("id_user");
                 String username = R.getString("username");
                 String nama = R.getString("nama");
                 String jabatan = R.getString("jabatan");
@@ -306,7 +325,7 @@ public class ManageUsers extends javax.swing.JPanel {
     private void searchDataUser() {
         String key = txtSearch.getText();
         String where = " WHERE "
-                + "id_admin LIKE '%" + key + "%' OR "
+                + "id_user LIKE '%" + key + "%' OR "
                 + "username LIKE '%" + key + "%' OR "
                 + "nama LIKE '%" + key + "%' OR "
                 + "jabatan LIKE '%" + key + "%' OR "

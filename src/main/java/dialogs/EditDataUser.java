@@ -258,14 +258,14 @@ public class EditDataUser extends javax.swing.JDialog {
             String email = txtEmail.getText();
             String password = new String(txtPassword.getPassword());
 
-            String Q = "UPDATE admin SET "
+            String Q = "UPDATE user SET "
                     + "username=?, "
                     + "nama=?, "
                     + "jabatan=?, "
                     + "email=?, "
                     + "password=? "
                     + "WHERE "
-                    + "id_admin=?";
+                    + "id_user=?";
             Connection C = Koneksi.Go();
             PreparedStatement PS = C.prepareStatement(Q);
             PS.setString(1, username);

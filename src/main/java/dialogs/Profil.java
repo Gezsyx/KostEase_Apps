@@ -8,6 +8,8 @@ import util.Users;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import javax.swing.JPanel;
+import kostease.DashboardAdmin;
+import kostease.Login;
 
 /**
  *
@@ -25,8 +27,8 @@ public class Profil extends javax.swing.JDialog {
     public Profil(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-//        jLabel2.setText(P.getUsername());
-//        jLabel3.setText(P.getEmail());
+        txtUsername.setText(P.getUsername());
+        txtEmail.setText(P.getEmail());
     }
 
     /**
@@ -155,6 +157,11 @@ public class Profil extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Login P = new Login();
+        this.setVisible(false);
+        P.setVisible(true);
+        P.setExtendedState(Frame.MAXIMIZED_BOTH);
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 

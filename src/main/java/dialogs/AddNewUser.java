@@ -220,7 +220,7 @@ public class AddNewUser extends javax.swing.JDialog {
             String password = new String(txtPassword.getPassword());
 
             Connection K = Koneksi.Go();
-            String sql = "INSERT INTO admin "
+            String sql = "INSERT INTO user "
                     + "(username,nama,jabatan,email,password) "
                     + "VALUES "
                     + "(?,?,?,?,?)";
