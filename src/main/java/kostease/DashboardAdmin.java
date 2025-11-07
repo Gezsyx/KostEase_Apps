@@ -48,7 +48,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1920, 1080));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -122,7 +121,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Pengguna");
+        jButton2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jButton2.setText("Manage Rooms");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);

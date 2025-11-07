@@ -51,11 +51,16 @@ public class DeleteDataUsers extends javax.swing.JDialog {
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(255, 51, 51));
+
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("jLabel1");
 
         jSeparator1.setBackground(new java.awt.Color(204, 0, 0));
-        jSeparator1.setForeground(new java.awt.Color(255, 51, 51));
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
+        btnHapus.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         btnHapus.setText("Hapus");
         btnHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,6 +68,7 @@ public class DeleteDataUsers extends javax.swing.JDialog {
             }
         });
 
+        btnBatal.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         btnBatal.setText("Batal");
         btnBatal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
