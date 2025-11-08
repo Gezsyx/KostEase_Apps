@@ -17,7 +17,7 @@ import util.Koneksi;
  */
 public class DeleteDataKamar extends javax.swing.JDialog {
     
-    public Kamar Kd;
+    public Kamar Ddk;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DeleteDataKamar.class.getName());
 
@@ -120,7 +120,7 @@ public class DeleteDataKamar extends javax.swing.JDialog {
             String sql = "DELETE FROM kamar WHERE "
                     + "id_kamar=?";
             PreparedStatement PS = K.prepareStatement(sql);
-            PS.setInt(1, Kd.getId());
+            PS.setInt(1, Ddk.getId());
             PS.executeUpdate();
 
             //refresh data
@@ -139,7 +139,7 @@ public class DeleteDataKamar extends javax.swing.JDialog {
         jLabel1.setText(""
                 + "<html>"
                 + "<p>Apakah Anda yakin ingin menghapus data Kamar No. "
-                + " " + Kd.getNoKamar() + "?</p>"
+                + " " + Ddk.getNoKamar() + "?</p>"
                 + "</html>"
                 + "");
         // TODO add your handling code here:

@@ -205,7 +205,7 @@ public class Login extends javax.swing.JFrame {
                 
                 //
                 DashboardAdmin DA = new DashboardAdmin();
-                DA.P = Us;
+                DA.Usr = Us;
                 DA.setVisible(true);
                 DA.setExtendedState(Frame.MAXIMIZED_BOTH); 
             }else {

@@ -18,7 +18,7 @@ import util.Users;
  */
 public class EditDataUser extends javax.swing.JDialog {
 
-    public Users P;
+    public Users Edu;
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditDataUser.class.getName());
 
@@ -182,11 +182,11 @@ public class EditDataUser extends javax.swing.JDialog {
         // TODO add your handling code here:
         
 
-        txtUsername.setText(P.getUsername());
-        txtNama.setText(P.getNama());
-        txtJabatan.setSelectedItem(P.getJabatan());
-        txtEmail.setText(P.getEmail());
-        txtPassword.setText(P.getPassword());
+        txtUsername.setText(Edu.getUsername());
+        txtNama.setText(Edu.getNama());
+        txtJabatan.setSelectedItem(Edu.getJabatan());
+        txtEmail.setText(Edu.getEmail());
+        txtPassword.setText(Edu.getPassword());
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -273,7 +273,7 @@ public class EditDataUser extends javax.swing.JDialog {
             PS.setString(3, jabatan);
             PS.setString(4,email);
             PS.setString(5, password);
-            PS.setInt(6, P.getId());
+            PS.setInt(6, Edu.getId());
             PS.executeUpdate();
 
             //refresh data

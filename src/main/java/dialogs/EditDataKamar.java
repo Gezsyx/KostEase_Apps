@@ -19,7 +19,7 @@ import util.Koneksi;
  */
 public class EditDataKamar extends javax.swing.JDialog {
     
-    public Kamar K;
+    public Kamar Edk;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditDataKamar.class.getName());
 
@@ -192,10 +192,10 @@ public class EditDataKamar extends javax.swing.JDialog {
     }//GEN-LAST:event_txtTipeActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        txtNo.setText(K.getNoKamar());
-        txtTipe.setText(K.getTipe());
-        txtHarga.setText(K.getHarga());
-        txtStatus.setSelectedItem(K.getStatus());
+        txtNo.setText(Edk.getNoKamar());
+        txtTipe.setText(Edk.getTipe());
+        txtHarga.setText(Edk.getHarga());
+        txtStatus.setSelectedItem(Edk.getStatus());
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
@@ -276,7 +276,7 @@ public class EditDataKamar extends javax.swing.JDialog {
             PS.setString(2, tipe);
             PS.setString(3, harga);
             PS.setString(4,status);
-            PS.setInt(5, K.getId());
+            PS.setInt(5, Edk.getId());
             PS.executeUpdate();
 
             //refresh data

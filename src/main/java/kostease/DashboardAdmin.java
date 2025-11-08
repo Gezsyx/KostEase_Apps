@@ -17,7 +17,7 @@ import panels.ManageKamar;
  * @author ASUS
  */
 public class DashboardAdmin extends javax.swing.JFrame {
-    Users P;
+    Users Usr;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardAdmin.class.getName());
 
@@ -46,6 +46,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         form = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -154,6 +155,11 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         form.setBackground(new java.awt.Color(255, 255, 255));
         form.setLayout(new java.awt.BorderLayout());
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg_daashboard2.png"))); // NOI18N
+        jLabel3.setPreferredSize(new java.awt.Dimension(1610, 805));
+        form.add(jLabel3, java.awt.BorderLayout.PAGE_START);
+
         bacground_panel.add(form, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 113, 1610, 805));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new.png"))); // NOI18N
@@ -176,19 +182,19 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Profil PF = new Profil(null, true);
-        PF.setVisible(true);         // TODO add your handling code here:
+        Profil Pf = new Profil(null, true);
+        Pf.setVisible(true);         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        Login P = new Login();
+        Login Lgn = new Login();
         this.setVisible(false); 
-        P.setVisible(true); 
-        P.setExtendedState(Frame.MAXIMIZED_BOTH);         // TODO add your handling code here:
+        Lgn.setVisible(true); 
+        Lgn.setExtendedState(Frame.MAXIMIZED_BOTH);         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        jLabel2.setText(P.getUsername());         // TODO add your handling code here:
+        jLabel2.setText(Usr.getUsername());         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -229,15 +235,16 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel sidebar;
     // End of variables declaration//GEN-END:variables
 
-    private void AddViews(JPanel P){
+    private void AddViews(JPanel Dt){
         if(form.getComponentCount() > 0){
             form.removeAll();
         }
-        form.add(P, BorderLayout.CENTER);
+        form.add(Dt, BorderLayout.CENTER);
         form.revalidate();
         form.repaint();
     }

@@ -19,7 +19,7 @@ public class DeleteDataUsers extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DeleteDataUsers.class.getName());
 
-    public Users P;
+    public Users Ddu;
 
     /**
      * Creates new form DeleteDataUsers
@@ -115,7 +115,7 @@ public class DeleteDataUsers extends javax.swing.JDialog {
         jLabel1.setText(""
                 + "<html>"
                 + "<p>Apakah Anda yakin ingin menghapus data "
-                + " " + P.getNama() + "?</p>"
+                + " " + Ddu.getNama() + "?</p>"
                 + "</html>"
                 + "");
         // TODO add your handling code here:
@@ -127,7 +127,7 @@ public class DeleteDataUsers extends javax.swing.JDialog {
             String sql = "DELETE FROM user WHERE "
                     + "id_user=?";
             PreparedStatement PS = K.prepareStatement(sql);
-            PS.setInt(1, P.getId());
+            PS.setInt(1, Ddu.getId());
             PS.executeUpdate();
 
             //refresh data

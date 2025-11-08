@@ -20,7 +20,7 @@ import dialogs.DeleteDataUsers;
  */
 public class ManageUsers extends javax.swing.JPanel {
 
-    Users Px;
+    Users Usr;
 
     /**
      * Creates new form ManageUsers
@@ -52,6 +52,7 @@ public class ManageUsers extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
 
         utama.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -167,8 +168,10 @@ public class ManageUsers extends javax.swing.JPanel {
 
         utama.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        contain.setBackground(new java.awt.Color(204, 0, 204));
+        contain.setBackground(new java.awt.Color(255, 255, 255));
         contain.setPreferredSize(new java.awt.Dimension(1610, 705));
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -181,6 +184,7 @@ public class ManageUsers extends javax.swing.JPanel {
                 "id_admin", "username", "nama", "jabatan", "email", "password"
             }
         ));
+        jTable1.setPreferredSize(new java.awt.Dimension(1610, 670));
         jTable1.setRowHeight(40);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -211,9 +215,9 @@ public class ManageUsers extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (jTable1.getSelectedRow() != -1) {
-            EditDataUser em = new EditDataUser(null, true);
-            em.P = Px;
-            em.setVisible(true);
+            EditDataUser eu = new EditDataUser(null, true);
+            eu.Edu = Usr;
+            eu.setVisible(true);
         } else {
             //
         }
@@ -231,7 +235,7 @@ public class ManageUsers extends javax.swing.JPanel {
             jButton2.setEnabled(true);
             jButton3.setEnabled(true);
             //ekstraksi data
-            Px = new Users();
+            Usr = new Users();
             String IDusr = jTable1.getValueAt(n, 0).toString();
             int ID = Integer.valueOf(IDusr);
             String username = jTable1.getValueAt(n, 1).toString();
@@ -239,12 +243,12 @@ public class ManageUsers extends javax.swing.JPanel {
             String jabatan = jTable1.getValueAt(n, 3).toString();
             String email = jTable1.getValueAt(n, 4).toString();
             String password = jTable1.getValueAt(n, 5).toString();
-            Px.setId(ID);
-            Px.setUsername(username);
-            Px.setNama(nama);
-            Px.setJabatan(jabatan);
-            Px.setEmail(email);
-            Px.setPassword(password);
+            Usr.setId(ID);
+            Usr.setUsername(username);
+            Usr.setNama(nama);
+            Usr.setJabatan(jabatan);
+            Usr.setEmail(email);
+            Usr.setPassword(password);
 
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jTable1MouseClicked
@@ -264,9 +268,9 @@ public class ManageUsers extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchKeyReleased
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        DeleteDataUsers dm = new DeleteDataUsers(null, true);
-        dm.P = Px;
-        dm.setVisible(true);
+        DeleteDataUsers du = new DeleteDataUsers(null, true);
+        du.Ddu = Usr;
+        du.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
