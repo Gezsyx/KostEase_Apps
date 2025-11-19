@@ -16,9 +16,9 @@ import util.Koneksi;
  * @author ASUS
  */
 public class DeleteDataKamar extends javax.swing.JDialog {
-    
+
     public Kamar Ddk;
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DeleteDataKamar.class.getName());
 
     /**
@@ -115,7 +115,7 @@ public class DeleteDataKamar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-                try {
+        try {
             Connection K = Koneksi.Go();
             String sql = "DELETE FROM kamar WHERE "
                     + "id_kamar=?";
@@ -127,10 +127,11 @@ public class DeleteDataKamar extends javax.swing.JDialog {
             ManageKamar.refreshDataKamar("");
             this.setVisible(false);
 
-            JOptionPane.showMessageDialog(null, "Berhasil menghapus data");
+            JOptionPane.showMessageDialog(null, "Berhasil menghapus data"); 
 
         } catch (Exception e) {
             //error handling
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan" + e.getMessage());
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed

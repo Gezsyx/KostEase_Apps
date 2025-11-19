@@ -10,6 +10,7 @@ import dialogs.EditDataKamar;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import util.Koneksi;
 import util.Kamar;
@@ -319,6 +320,8 @@ public class ManageKamar extends javax.swing.JPanel {
     }
 
     private void searchDataKamar() {
+        try {
+            
         String key = txtSearch.getText();
         String where = " WHERE "
                 + "id_kamar LIKE '%" + key + "%' OR "
@@ -327,6 +330,9 @@ public class ManageKamar extends javax.swing.JPanel {
                 + "harga LIKE '%" + key + "%' OR "
                 + "status LIKE '%" + key + "%'";
         refreshDataKamar(where);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ada kesalahan saat menggunakan fitur search data" + e.getMessage());
+        }
     }
 
 }
