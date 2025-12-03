@@ -7,27 +7,26 @@ package dialogs;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
+import panels.ManageOkupansi;
 import util.Koneksi;
-import util.Pegawai;
-import panels.ManageUsers;
+import util.Okupansi;
 
 /**
  *
  * @author ASUS
  */
-public class DeleteDataUsers extends javax.swing.JDialog {
+public class DeleteOkupansi extends javax.swing.JDialog {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DeleteDataUsers.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DeleteOkupansi.class.getName());
 
-    public Pegawai Ddu;
+    public Okupansi Ddok;
 
     /**
-     * Creates new form DeleteDataUsers
+     * Creates new form DeleteOkupansi
      */
-    public DeleteDataUsers(java.awt.Frame parent, boolean modal) {
+    public DeleteOkupansi(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setLocationRelativeTo(null);
     }
 
     /**
@@ -107,31 +106,40 @@ public class DeleteDataUsers extends javax.swing.JDialog {
                 .addContainerGap(59, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        jLabel1.setText(""
-                + "<html>"
-                + "<p>Apakah Anda yakin ingin menghapus data "
-                + " " + Ddu.getNama() + "?</p>"
-                + "</html>"
-                + "");
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowOpened
-
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         try {
             Connection K = Koneksi.Go();
-            String sql = "DELETE FROM pegawai WHERE "
-                    + "id_pegawai=?";
+            String sql = "DELETE FROM okupansi_kamar WHERE "
+                    + "id_okupansi=?";
             PreparedStatement PS = K.prepareStatement(sql);
-            PS.setInt(1, Ddu.getId());
+            PS.setInt(1, Ddok.getId());
             PS.executeUpdate();
 
-            ManageUsers.refreshDataUsers("");
+            ManageOkupansi.refreshDataOkupansi("");
             this.setVisible(false);
 
             JOptionPane.showMessageDialog(null, "Berhasil menghapus data");
@@ -146,6 +154,15 @@ public class DeleteDataUsers extends javax.swing.JDialog {
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBatalActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        jLabel1.setText(""
+                + "<html>"
+                + "<p>Apakah Anda yakin ingin menghapus data okupansi dengan ID"
+                + " " + Ddok.getId()+ "?</p>"
+                + "</html>"
+                + "");        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -172,7 +189,7 @@ public class DeleteDataUsers extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                DeleteDataUsers dialog = new DeleteDataUsers(new javax.swing.JFrame(), true);
+                DeleteOkupansi dialog = new DeleteOkupansi(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

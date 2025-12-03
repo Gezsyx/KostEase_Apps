@@ -4,29 +4,24 @@
  */
 package kostease;
 
-import util.Pegawai;
-import java.awt.BorderLayout;
-import java.awt.Frame;
-import javax.swing.JPanel;
-import panels.ManageUsers;
 import dialogs.Profil;
-import panels.ManageKamar;
-import panels.ManageOkupansi;
+import java.awt.Frame;
+import util.Pegawai;
 
 /**
  *
  * @author ASUS
  */
-public class DashboardAdmin extends javax.swing.JFrame {
+public class DashboardKasir extends javax.swing.JFrame {
 
     Pegawai Usr;
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardAdmin.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardKasir.class.getName());
 
     /**
-     * Creates new form DashboardAdmin
+     * Creates new form DashboardKasir
      */
-    public DashboardAdmin() {
+    public DashboardKasir() {
         initComponents();
     }
 
@@ -39,13 +34,13 @@ public class DashboardAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bacground_panel = new javax.swing.JPanel();
+        background = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         sidebar = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnProduk = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         form = new javax.swing.JPanel();
@@ -59,7 +54,8 @@ public class DashboardAdmin extends javax.swing.JFrame {
             }
         });
 
-        bacground_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        background.setMinimumSize(new java.awt.Dimension(1920, 1080));
+        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setOpaque(false);
 
@@ -113,21 +109,21 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
-        bacground_panel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 110));
+        background.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 110));
 
         sidebar.setBackground(new java.awt.Color(90, 147, 32));
         sidebar.setPreferredSize(new java.awt.Dimension(1920, 770));
 
-        jButton1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jButton1.setText("Manage Users");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnProduk.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnProduk.setText("Pembelian Produk");
+        btnProduk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnProdukActionPerformed(evt);
             }
         });
 
         jButton2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jButton2.setText("Manage Kamar");
+        jButton2.setText("Laporan Keuangan");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -135,7 +131,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         });
 
         jButton5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jButton5.setText("Manage Okupansi");
+        jButton5.setText("Riwayat Pembelian");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -149,7 +145,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
             .addGroup(sidebarLayout.createSequentialGroup()
                 .addGap(71, 71, 71)
                 .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnProduk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(79, 79, 79))
@@ -158,14 +154,15 @@ public class DashboardAdmin extends javax.swing.JFrame {
             sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sidebarLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(611, 611, 611))
         );
 
-        bacground_panel.add(sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 113, 290, 805));
+        background.add(sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 113, 290, 805));
 
         form.setBackground(new java.awt.Color(255, 255, 255));
         form.setLayout(new java.awt.BorderLayout());
@@ -174,26 +171,17 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jLabel3.setPreferredSize(new java.awt.Dimension(1610, 805));
         form.add(jLabel3, java.awt.BorderLayout.PAGE_START);
 
-        bacground_panel.add(form, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 113, 1610, 805));
+        background.add(form, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 113, 1610, 805));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         jLabel1.setPreferredSize(new java.awt.Dimension(1920, 1080));
-        bacground_panel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        background.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        getContentPane().add(bacground_panel, java.awt.BorderLayout.CENTER);
+        getContentPane().add(background, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AddViews(new ManageUsers());        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        AddViews(new ManageKamar());
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Profil Pf = new Profil(null, true, this.Usr);
@@ -207,13 +195,22 @@ public class DashboardAdmin extends javax.swing.JFrame {
         Lgn.setExtendedState(Frame.MAXIMIZED_BOTH);         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void btnProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdukActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProdukActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        jLabel2.setText(Usr.getUsername());         // TODO add your handling code here:
+        jLabel2.setText(Usr.getUsername());
+        // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        AddViews(new ManageOkupansi());
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
@@ -238,17 +235,13 @@ public class DashboardAdmin extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DashboardAdmin().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new DashboardKasir().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel bacground_panel;
+    private javax.swing.JPanel background;
+    private javax.swing.JButton btnProduk;
     private javax.swing.JPanel form;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -259,14 +252,4 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel sidebar;
     // End of variables declaration//GEN-END:variables
-
-    private void AddViews(JPanel Dt) {
-        if (form.getComponentCount() > 0) {
-            form.removeAll();
-        }
-        form.add(Dt, BorderLayout.CENTER);
-        form.revalidate();
-        form.repaint();
-    }
-
 }

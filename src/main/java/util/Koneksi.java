@@ -10,7 +10,7 @@ public class Koneksi {
         try {
             MysqlDataSource MDS = new MysqlDataSource();
             MDS.setServerName("localhost");
-            MDS.setDatabaseName("kostease"); 
+            MDS.setDatabaseName("kostease_apps"); 
             MDS.setUser("root");
             MDS.setPassword("");
             MDS.setPort(3306);

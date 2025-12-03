@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import util.Koneksi;
-import util.Users;
+import util.Pegawai;
 
 /**
  *
@@ -156,10 +156,9 @@ public class Login extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-//                new LoginPage().setVisible(true);
                 Login LP = new Login();
                 LP.setVisible(true);
-                LP.setExtendedState(Frame.MAXIMIZED_BOTH); 
+                LP.setExtendedState(Frame.MAXIMIZED_BOTH);
             }
         });
     }
@@ -176,86 +175,48 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel utama;
     // End of variables declaration//GEN-END:variables
 
-    
     private void LoginNow() {
         String usr = txtUsername.getText();
         String pwd = new String(txtPassword.getPassword());
         try {
             Connection K = Koneksi.Go();
             Statement ST = K.createStatement();
-            String Q = "SELECT * FROM user "
+            String Q = "SELECT * FROM pegawai "
                     + "WHERE "
-                    + "username='"+usr+"' AND "
-                    + "password='"+pwd+"'";
+                    + "username='" + usr + "' AND "
+                    + "password='" + pwd + "'";
             ResultSet RS = ST.executeQuery(Q);
             int n = 0;
-            Users Us = new Users();
-            while (RS.next()) {                
+            Pegawai Us = new Pegawai();
+            while (RS.next()) {
                 n++;
-                Us.setId(RS.getInt("id_user"));
+                Us.setId(RS.getInt("id_pegawai"));
                 Us.setUsername(RS.getString("username"));
                 Us.setNama(RS.getString("nama"));
                 Us.setJabatan(RS.getString("jabatan"));
                 Us.setEmail(RS.getString("email"));
                 Us.setPassword(RS.getString("password"));
+//                Eksperimen Kode
+                Us.setFotoProfil(RS.getString("foto_profil"));
             }
-            if(n>0){
-                //System.out.println("Akun ditemukan");
-                this.setVisible(false); 
-                
-                //
+            if (Us.getJabatan().equals("ADMIN")) {
+                this.setVisible(false);
                 DashboardAdmin DA = new DashboardAdmin();
                 DA.Usr = Us;
                 DA.setVisible(true);
-                DA.setExtendedState(Frame.MAXIMIZED_BOTH); 
-            }else {
-                System.err.println("Akun tidak ditemukan");
-            }
+                DA.setExtendedState(Frame.MAXIMIZED_BOTH);
+            } else if (Us.getJabatan().equals("KASIR")) {
+                this.setVisible(false);
+                DashboardKasir DK = new DashboardKasir();
+                DK.Usr = Us;
+                DK.setVisible(true);
+                DK.setExtendedState(Frame.MAXIMIZED_BOTH);
+            } else if (Us.getJabatan().equals("MANAJER")) {
+
+            } 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Terjadi error:\n" + e.getMessage());
         }
-        
-        
+
     }
-
-
-//    private void LoginNow() {
-//        String usr = txtUsername.getText();
-//        String pwd = new String(txtPassword.getPassword());
-//        try {
-//            Connection K = Koneksi.Go();
-//            Statement ST = K.createStatement();
-//            String Q = "SELECT * FROM pegawai "
-//                    + "WHERE "
-//                    + "username='"+usr+"' AND "
-//                    + "password_hash='"+pwd+"'";
-//            ResultSet RS = ST.executeQuery(Q);
-//            int n = 0;
-//            Pegawai Pg = new Pegawai();
-//            while (RS.next()) {                
-//                n++;
-//                Pg.setId(RS.getInt("id_pegawai"));
-//                Pg.setNama(RS.getString("nama_pegawai"));
-//                Pg.setJabatan(RS.getString("nama_pegawai"));
-//                Pg.setUsername(RS.getString("username"));
-//                Pg.setPassword(RS.getString("password_hash"));
-//            }
-//            if(n>0){
-//               
-//                //System.out.println("Akun ditemukan");
-//                this.setVisible(false); 
-//                
-//                //
-//                DashboardAdmin DA = new DashboardAdmin();
-//                DA.P = Pg;
-//                DA.setVisible(true);
-//                DA.setExtendedState(Frame.MAXIMIZED_BOTH); 
-//            }else {
-//                System.err.println("Akun tidak ditemukan");
-//            }
-//        } catch (Exception e) {
-//        }
-//        
-//        
-//    }
 }

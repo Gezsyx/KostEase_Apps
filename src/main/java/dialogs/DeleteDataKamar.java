@@ -27,6 +27,7 @@ public class DeleteDataKamar extends javax.swing.JDialog {
     public DeleteDataKamar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -123,14 +124,12 @@ public class DeleteDataKamar extends javax.swing.JDialog {
             PS.setInt(1, Ddk.getId());
             PS.executeUpdate();
 
-            //refresh data
             ManageKamar.refreshDataKamar("");
             this.setVisible(false);
 
             JOptionPane.showMessageDialog(null, "Berhasil menghapus data"); 
 
         } catch (Exception e) {
-            //error handling
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan" + e.getMessage());
         }
         // TODO add your handling code here:

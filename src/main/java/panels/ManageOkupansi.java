@@ -4,30 +4,30 @@
  */
 package panels;
 
+import dialogs.AddOkupansi;
+import dialogs.DeleteOkupansi;
+import dialogs.EditOkupansi;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
-import dialogs.AddNewUser;
-import dialogs.EditDataUser;
 import util.Koneksi;
-import util.Pegawai;
-import dialogs.DeleteDataUsers;
+import util.Okupansi;
 
 /**
  *
  * @author ASUS
  */
-public class ManageUsers extends javax.swing.JPanel {
+public class ManageOkupansi extends javax.swing.JPanel {
 
-    Pegawai Usr;
+    Okupansi Mok;
 
     /**
-     * Creates new form ManageUsers
+     * Creates new form ManageOkupansi
      */
-    public ManageUsers() {
+    public ManageOkupansi() {
         initComponents();
-        refreshDataUsers("");
+        refreshDataOkupansi("");
     }
 
     /**
@@ -39,29 +39,30 @@ public class ManageUsers extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        utama = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         txtSearch = new javax.swing.JTextField();
         contain = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(1620, 805));
         setLayout(new java.awt.BorderLayout());
 
-        utama.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setPreferredSize(new java.awt.Dimension(1610, 805));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         header.setBackground(new java.awt.Color(255, 255, 255));
         header.setPreferredSize(new java.awt.Dimension(1610, 100));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 3, 18)); // NOI18N
-        jLabel1.setText("Manage Users");
+        jLabel1.setText("Manage Okupansi");
 
         jButton1.setBackground(new java.awt.Color(0, 255, 0));
         jButton1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -105,7 +106,7 @@ public class ManageUsers extends javax.swing.JPanel {
             }
         });
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtSearch.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
         txtSearch.setText("Search...");
@@ -125,7 +126,7 @@ public class ManageUsers extends javax.swing.JPanel {
                 txtSearchKeyReleased(evt);
             }
         });
-        jPanel1.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 40));
+        jPanel2.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 40));
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
@@ -135,19 +136,17 @@ public class ManageUsers extends javax.swing.JPanel {
                 .addGap(17, 17, 17)
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(headerLayout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(1444, Short.MAX_VALUE))
-                    .addGroup(headerLayout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton4)
-                        .addGap(894, 894, 894)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(jButton3))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton4)
+                .addGap(894, 894, 894)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 35, Short.MAX_VALUE))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,11 +161,11 @@ public class ManageUsers extends javax.swing.JPanel {
                 .addGap(0, 22, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
 
-        utama.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         contain.setBackground(new java.awt.Color(255, 255, 255));
         contain.setPreferredSize(new java.awt.Dimension(1610, 705));
@@ -175,13 +174,13 @@ public class ManageUsers extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "id_pegawai", "username", "nama", "jabatan", "email", "password", "foto_profil"
+                "id_okupansi", "status", "waktu_mulai", "waktu_berakhir", "id_pelanggan", "id_kamar"
             }
         ));
         jTable1.setPreferredSize(new java.awt.Dimension(1610, 670));
@@ -208,81 +207,82 @@ public class ManageUsers extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE))
         );
 
-        utama.add(contain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, -1));
+        jPanel1.add(contain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, -1));
 
-        add(utama, java.awt.BorderLayout.CENTER);
+        add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        AddOkupansi NOK = new AddOkupansi(null, true);
+        NOK.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (jTable1.getSelectedRow() != -1) {
-            EditDataUser eu = new EditDataUser(null, true);
-            eu.Edu = Usr;
-            eu.setVisible(true);
-        } else {
-            //
-        }
+        EditOkupansi eok = new EditOkupansi(null, true);
+        eok.Edok = Mok;
+        eok.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AddNewUser NU = new AddNewUser(null, true);
-        NU.setVisible(true);         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int n = jTable1.getSelectedRow();
-        if (n != -1) {
-            jButton2.setEnabled(true);
-            jButton3.setEnabled(true);
-            Usr = new Pegawai();
-            String IDusr = jTable1.getValueAt(n, 0).toString();
-            int ID = Integer.valueOf(IDusr);
-            String username = jTable1.getValueAt(n, 1).toString();
-            String nama = jTable1.getValueAt(n, 2).toString();
-            String jabatan = jTable1.getValueAt(n, 3).toString();
-            String email = jTable1.getValueAt(n, 4).toString();
-            String password = jTable1.getValueAt(n, 5).toString();
-            String foto_profil = jTable1.getValueAt(n, 6).toString();
-            Usr.setId(ID);
-            Usr.setUsername(username);
-            Usr.setNama(nama);
-            Usr.setJabatan(jabatan);
-            Usr.setEmail(email);
-            Usr.setPassword(password);
-            Usr.setFotoProfil(foto_profil);
-
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1MouseClicked
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        DeleteOkupansi dok = new DeleteOkupansi(null, true);
+        dok.Ddok = Mok;
+        dok.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jTable1.clearSelection();
-        refreshDataUsers("");
+        refreshDataOkupansi("");
         txtSearch.setText("Search...");
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
-        searchDataUser();
-// TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchKeyReleased
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        DeleteDataUsers du = new DeleteDataUsers(null, true);
-        du.Ddu = Usr;
-        du.setVisible(true);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchActionPerformed
 
     private void txtSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSearchMouseClicked
         txtSearch.setText("");
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchMouseClicked
+
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        searchDataOkupansi();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchKeyReleased
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:     
+        int n = jTable1.getSelectedRow();
+        if (n != -1) {
+            jButton2.setEnabled(true);
+            jButton3.setEnabled(true);
+            Mok = new Okupansi();
+            String IDOkps = jTable1.getValueAt(n, 0).toString();
+            String IDKam = jTable1.getValueAt(n, 5).toString();
+            String IDPel = jTable1.getValueAt(n, 4).toString();
+            int ID = Integer.valueOf(IDOkps);
+            int idKam = Integer.valueOf(IDKam);
+            int idPel = 0;
+            if (IDPel != null && !IDPel.toString().trim().isEmpty()) {
+                idPel = Integer.valueOf(IDPel.toString());
+            }
+            String status = jTable1.getValueAt(n, 1).toString();
+            String mulai = jTable1.getValueAt(n, 2) != null ? jTable1.getValueAt(n, 2).toString() : "";
+            String akhir = jTable1.getValueAt(n, 3) != null ? jTable1.getValueAt(n, 3).toString() : "";
+            Mok.setId(ID);
+            Mok.setIdKam(idKam);
+            Mok.setStatus(status);
+            Mok.setMulai(mulai);
+            Mok.setAkhir(akhir);
+            Mok.setIdPel(idPel);
+
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -294,13 +294,13 @@ public class ManageUsers extends javax.swing.JPanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private static javax.swing.JTable jTable1;
     private javax.swing.JTextField txtSearch;
-    private javax.swing.JPanel utama;
     // End of variables declaration//GEN-END:variables
 
-    public static void refreshDataUsers(String w) {
+    public static void refreshDataOkupansi(String w) {
         try {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             for (int i = model.getRowCount() - 1; i >= 0; i--) {
@@ -308,18 +308,17 @@ public class ManageUsers extends javax.swing.JPanel {
             }
 
             Connection K = Koneksi.Go();
-            String Q = "SELECT * FROM pegawai" + w;
+            String Q = "SELECT * FROM okupansi_kamar" + w;
             Statement S = K.createStatement();
             ResultSet R = S.executeQuery(Q);
             while (R.next()) {
-                int id = R.getInt("id_pegawai");
-                String username = R.getString("username");
-                String nama = R.getString("nama");
-                String jabatan = R.getString("jabatan");
-                String email = R.getString("email");
-                String password = R.getString("password");
-                String foto_profil = R.getString("foto_profil");
-                Object[] datausers = {id, username, nama, jabatan, email, password, foto_profil};
+                int id = R.getInt("id_okupansi");
+                String status = R.getString("status_kamar");
+                String mulai = R.getString("waktu_mulai");
+                String akhir = R.getString("waktu_berakhir");
+                int idPel = R.getInt("id_pelanggan");
+                int idKam = R.getInt("id_kamar");
+                Object[] datausers = {id, status, mulai, akhir, idPel, idKam};
                 model.addRow(datausers);
             }
 
@@ -328,17 +327,16 @@ public class ManageUsers extends javax.swing.JPanel {
         }
     }
 
-    private void searchDataUser() {
+    private void searchDataOkupansi() {
         String key = txtSearch.getText();
         String where = " WHERE "
-                + "id_pegawai LIKE '%" + key + "%' OR "
-                + "username LIKE '%" + key + "%' OR "
-                + "nama LIKE '%" + key + "%' OR "
-                + "jabatan LIKE '%" + key + "%' OR "
-                + "email LIKE '%" + key + "%' OR "
-                + "password LIKE '%" + key + "%' OR "
-                + "foto_profil LIKE '%" + key + "%'";
-        refreshDataUsers(where);
+                + "id_okupansi LIKE '%" + key + "%' OR "
+                + "status_kamar LIKE '%" + key + "%' OR "
+                + "waktu_mulai LIKE '%" + key + "%' OR "
+                + "waktu_berakhir LIKE '%" + key + "%' OR "
+                + "id_pelanggan LIKE '%" + key + "%' OR "
+                + "id_kamar LIKE '%" + key + "%'";
+        refreshDataOkupansi(where);
     }
 
 }

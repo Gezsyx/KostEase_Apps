@@ -8,13 +8,15 @@ package util;
  *
  * @author ASUS
  */
-public class Users {
+public class Pegawai {
     private int id_user;
     private String nama;
     private String email;
     private String username;
     private String password;
     private String jabatan;
+//    Eksperimen Kode
+    private String profil;
     
     
     public int getId() {
@@ -64,6 +66,13 @@ public class Users {
     public void setPassword(String password) {
         this.password = password;
     }
+//    Eksperimen Kode
+    public String getFotoProfil(){
+        return profil;
+    }
     
+    public void setFotoProfil(String foto_profil){
+        this.profil = foto_profil;
+    }
     
 }

@@ -9,13 +9,14 @@ package util;
  * @author ASUS
  */
 public class Kamar {
+
     private int id_kamar;
     private String no_kamar;
     private String tipe_kamar;
-    private String harga;
-    private String status;
-    
-    
+    private String harga_harian;
+    private String deskripsi;
+    private String gambar;
+
     public int getId() {
         return id_kamar;
     }
@@ -31,7 +32,6 @@ public class Kamar {
     public void setNoKamar(String no_kamar) {
         this.no_kamar = no_kamar;
     }
-    
 
     public String getTipe() {
         return tipe_kamar;
@@ -40,22 +40,28 @@ public class Kamar {
     public void setTipe(String tipe_kamar) {
         this.tipe_kamar = tipe_kamar;
     }
-    
-    public String getHarga() {
-        return harga;
+
+    public String getHargaHarian() {
+        return harga_harian;
     }
 
-    public void setHarga(String harga) {
-        this.harga = harga;
-    }
-    
-    public String getStatus() {
-        return status;
+    public void setHargaHarian(String harga) {
+        this.harga_harian = harga;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public String getDeskripsi() {
+        return deskripsi;
     }
 
+    public void setDeskripsi(String deskripsi) {
+        this.deskripsi = deskripsi;
+    }
 
+    public String getGambar() {
+        return gambar;
+    }
+
+    public void setGambar(String gambar){
+        this.gambar = gambar;
+    }
 }

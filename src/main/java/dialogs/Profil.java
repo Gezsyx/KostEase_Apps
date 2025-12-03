@@ -4,12 +4,19 @@
  */
 package dialogs;
 
-import util.Users;
+import util.Pegawai;
 import java.awt.BorderLayout;
 import java.awt.Frame;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import kostease.DashboardAdmin;
 import kostease.Login;
+//Eksperimen
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -17,18 +24,26 @@ import kostease.Login;
  */
 public class Profil extends javax.swing.JDialog {
 
-    public Users P;
+    private Pegawai P;
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Profil.class.getName());
 
     /**
      * Creates new form Profil
      */
-    public Profil(java.awt.Frame parent, boolean modal) {
+    public Profil(java.awt.Frame parent, boolean modal, Pegawai user) {
         super(parent, modal);
         initComponents();
-        txtUsername.setText(P.getUsername());
-        txtEmail.setText(P.getEmail());
+        this.P = user;
+        setLocationRelativeTo(null);
+    }
+
+    public Profil(Object object, boolean b, Pegawai Usr) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private Profil(JFrame jFrame, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -42,12 +57,13 @@ public class Profil extends javax.swing.JDialog {
 
         utama = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        txtUsername = new javax.swing.JLabel();
+        txtNama = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        txtUsername = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -57,29 +73,35 @@ public class Profil extends javax.swing.JDialog {
         });
 
         utama.setBackground(new java.awt.Color(213, 221, 51));
+        utama.setPreferredSize(new java.awt.Dimension(360, 490));
+        utama.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jButton1.setText("Logout");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+        utama.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 400, 100, 30));
 
-        txtUsername.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txtUsername.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtUsername.setText("Username");
-        txtUsername.addComponentListener(new java.awt.event.ComponentAdapter() {
+        txtNama.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        txtNama.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtNama.setText("Nama");
+        txtNama.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
-                txtUsernameComponentShown(evt);
+                txtNamaComponentShown(evt);
             }
         });
+        utama.add(txtNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 200, -1));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user.png"))); // NOI18N
+        utama.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/email.png"))); // NOI18N
+        utama.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 34, -1));
 
-        txtEmail.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txtEmail.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtEmail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtEmail.setText("Email");
         txtEmail.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -87,69 +109,37 @@ public class Profil extends javax.swing.JDialog {
                 txtEmailComponentShown(evt);
             }
         });
+        utama.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 270, -1));
 
-        jPanel3.setPreferredSize(new java.awt.Dimension(165, 165));
+        jPanel3.setPreferredSize(new java.awt.Dimension(100, 100));
 
-        jLabel1.setText("Profile");
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("N/A");
+        jLabel1.setPreferredSize(new java.awt.Dimension(100, 100));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jLabel1)
-                .addContainerGap(66, Short.MAX_VALUE))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout utamaLayout = new javax.swing.GroupLayout(utama);
-        utama.setLayout(utamaLayout);
-        utamaLayout.setHorizontalGroup(
-            utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(utamaLayout.createSequentialGroup()
-                .addContainerGap(220, Short.MAX_VALUE)
-                .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, utamaLayout.createSequentialGroup()
-                        .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(214, 214, 214))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, utamaLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(283, 283, 283))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, utamaLayout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(282, 282, 282))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, utamaLayout.createSequentialGroup()
-                        .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(244, 244, 244))))
-        );
-        utamaLayout.setVerticalGroup(
-            utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(utamaLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtUsername)
-                .addGap(54, 54, 54)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtEmail)
-                .addGap(92, 92, 92)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(111, Short.MAX_VALUE))
-        );
+        utama.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 100, 100));
+
+        txtUsername.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        txtUsername.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtUsername.setText("Username");
+        txtUsername.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                txtUsernameComponentShown(evt);
+            }
+        });
+        utama.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 160, -1));
 
         getContentPane().add(utama, java.awt.BorderLayout.CENTER);
 
@@ -165,20 +155,23 @@ public class Profil extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void txtUsernameComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_txtUsernameComponentShown
+    private void txtNamaComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_txtNamaComponentShown
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsernameComponentShown
+    }//GEN-LAST:event_txtNamaComponentShown
 
     private void txtEmailComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_txtEmailComponentShown
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailComponentShown
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        txtUsername.setText(P.getUsername());
-        txtEmail.setText(P.getEmail());
+        loadProfileImage();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
+
+    private void txtUsernameComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_txtUsernameComponentShown
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsernameComponentShown
 
     /**
      * @param args the command line arguments
@@ -224,7 +217,44 @@ public class Profil extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel txtEmail;
+    private javax.swing.JLabel txtNama;
     private javax.swing.JLabel txtUsername;
     private javax.swing.JPanel utama;
     // End of variables declaration//GEN-END:variables
+
+//Kode Eksperimen
+    private void setInisial() {
+        String username = P.getUsername();
+        String inisial = "";
+
+        if (username != null && username.length() >= 2) {
+            inisial = username.substring(0, 2);
+        } else if (username != null) {
+            inisial = username.toUpperCase();
+        } else {
+            inisial = "N/A";
+        }
+        jLabel1.setText(inisial);
+    }
+
+    private void loadProfileImage() {
+        txtUsername.setText(P.getUsername());
+        txtNama.setText(P.getNama());
+        txtEmail.setText(P.getEmail());
+        if (P != null && P.getFotoProfil() != null) {
+            try {
+                URL url = new URL(P.getFotoProfil());
+                BufferedImage img = ImageIO.read(url);
+
+                ImageIcon icon = new ImageIcon(img);
+                jLabel1.setText(null);
+                jLabel1.setIcon(icon);
+
+            } catch (IOException e) {
+                System.err.println("Gagal memuat gambar dari URL (URL tidak valid atau kosong): " + e.getMessage());
+                setInisial();
+            }
+        }
+    }
+
 }
