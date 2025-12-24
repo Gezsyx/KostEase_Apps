@@ -11,7 +11,6 @@ package util;
 public class Okupansi {
 
     private int id_okupansi;
-    private String status;
     private String mulai;
     private String akhir;
     private int id_pelanggan;
@@ -41,13 +40,6 @@ public class Okupansi {
         this.id_kamar = idKam;
     }
     
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
     
     public String getMulai() {
         return mulai;

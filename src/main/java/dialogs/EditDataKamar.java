@@ -61,6 +61,8 @@ public class EditDataKamar extends javax.swing.JDialog {
         labelGambar = new javax.swing.JLabel();
         txtGambar = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -130,6 +132,16 @@ public class EditDataKamar extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel7.setText("Link Gambar  :");
 
+        jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel8.setText("ID Status");
+
+        txtStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2" }));
+        txtStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStatusActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout utamaLayout = new javax.swing.GroupLayout(utama);
         utama.setLayout(utamaLayout);
         utamaLayout.setHorizontalGroup(
@@ -159,12 +171,14 @@ public class EditDataKamar extends javax.swing.JDialog {
                         .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel4))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel8))
                         .addGap(18, 18, 18)
                         .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtNo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTipe, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtTipe, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(utamaLayout.createSequentialGroup()
                         .addGap(181, 181, 181)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -188,6 +202,10 @@ public class EditDataKamar extends javax.swing.JDialog {
                             .addComponent(txtTipe, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(20, 20, 20)
                         .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(20, 20, 20)
@@ -202,7 +220,7 @@ public class EditDataKamar extends javax.swing.JDialog {
                 .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(utama, java.awt.BorderLayout.CENTER);
@@ -216,6 +234,7 @@ public class EditDataKamar extends javax.swing.JDialog {
         txtHarga.setText(Edk.getHargaHarian());
         txtDeskripsi.setText(Edk.getDeskripsi());
         txtGambar.setText(Edk.getGambar());
+        txtStatus.setSelectedItem(Edk.getStatus());
         loadImage();
         
         // TODO add your handling code here:
@@ -243,6 +262,10 @@ public class EditDataKamar extends javax.swing.JDialog {
      loadImage();
         // TODO add your handling code here:
     }//GEN-LAST:event_txtGambarKeyReleased
+
+    private void txtStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStatusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -290,12 +313,14 @@ public class EditDataKamar extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelGambar;
     private javax.swing.JTextArea txtDeskripsi;
     private javax.swing.JTextField txtGambar;
     private javax.swing.JTextField txtHarga;
     private javax.swing.JTextField txtNo;
+    private javax.swing.JComboBox<String> txtStatus;
     private javax.swing.JComboBox<String> txtTipe;
     private javax.swing.JPanel utama;
     // End of variables declaration//GEN-END:variables
@@ -307,13 +332,14 @@ public class EditDataKamar extends javax.swing.JDialog {
             String harga = txtHarga.getText();
             String deskripsi = txtDeskripsi.getText();
             String gambar = txtGambar.getText();
-
+            String status = txtStatus.getSelectedItem().toString();
             String Q = "UPDATE kamar SET "
                     + "no_kamar=?, "
                     + "tipe_kamar=?, "
                     + "harga_harian=?, "
                     + "deskripsi=?, "
-                    + "gambar=? "
+                    + "gambar=?, "
+                    + "status=? "
                     + "WHERE "
                     + "id_kamar=?";
             Connection C = Koneksi.Go();
@@ -323,7 +349,8 @@ public class EditDataKamar extends javax.swing.JDialog {
             PS.setString(3, harga);
             PS.setString(4,deskripsi);
             PS.setString(5, gambar);
-            PS.setInt(6, Edk.getId());
+            PS.setString(6, status);
+            PS.setInt(7, Edk.getId());
             PS.executeUpdate();
 
             ManageKamar.refreshDataKamar("");

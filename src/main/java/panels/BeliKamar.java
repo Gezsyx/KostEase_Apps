@@ -4,17 +4,37 @@
  */
 package panels;
 
+import java.awt.BorderLayout;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import util.Kamar;
+import util.Koneksi;
+import panels.PreviewKamar;
+
 /**
  *
  * @author ASUS
  */
 public class BeliKamar extends javax.swing.JPanel {
 
+    Kamar Bk;
+
     /**
      * Creates new form BeliKamar
      */
     public BeliKamar() {
         initComponents();
+        refreshDataKamar("");
+
     }
 
     /**
@@ -29,18 +49,18 @@ public class BeliKamar extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        txtFilter = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         txtSearch = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        preview = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         header.setBackground(new java.awt.Color(255, 255, 255));
@@ -48,6 +68,14 @@ public class BeliKamar extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Roboto", 3, 18)); // NOI18N
         jLabel1.setText("Katalog Kamar");
+
+        txtFilter.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txtFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Default", "Harga Tertinggi", "Harga Terendah", "" }));
+        txtFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFilterActionPerformed(evt);
+            }
+        });
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -71,21 +99,33 @@ public class BeliKamar extends javax.swing.JPanel {
         });
         jPanel2.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 40));
 
+        jLabel5.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel5.setText("Urutkan :");
+
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1073, 1073, 1073)
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(headerLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(1023, 1023, 1023)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 45, Short.MAX_VALUE))
+                .addGap(0, 47, Short.MAX_VALUE))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
                 .addContainerGap(40, Short.MAX_VALUE)
@@ -103,50 +143,30 @@ public class BeliKamar extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "No Kamar", "Tipe Kamar", "Harga", "Status"
+                "No Kamar", "Tipe Kamar", "Harga", "deskripsi"
             }
         ));
+        jTable1.setRowHeight(40);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 1220, 710));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 1620, 640));
 
-        jLabel2.setBackground(new java.awt.Color(51, 255, 51));
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/default-image kamar.jpg"))); // NOI18N
+        jButton1.setBackground(new java.awt.Color(0, 255, 51));
+        jButton1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Masukan Keranjang");
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1420, 760, 180, 30));
 
-        jLabel3.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Pilih kamar terlebih dahulu");
-
-        jLabel4.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("untuk melihat pratinjaunya!");
-
-        javax.swing.GroupLayout previewLayout = new javax.swing.GroupLayout(preview);
-        preview.setLayout(previewLayout);
-        previewLayout.setHorizontalGroup(
-            previewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(previewLayout.createSequentialGroup()
-                .addGap(132, 132, 132)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(148, Short.MAX_VALUE))
-            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        previewLayout.setVerticalGroup(
-            previewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(previewLayout.createSequentialGroup()
-                .addGap(206, 206, 206)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addContainerGap(298, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(preview, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 100, 400, 710));
+        jButton2.setBackground(new java.awt.Color(102, 204, 255));
+        jButton2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Lihat Keranjang");
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 760, 160, 30));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -161,22 +181,143 @@ public class BeliKamar extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchActionPerformed
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
-
+        searchDataKamar();
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchKeyReleased
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int n = jTable1.getSelectedRow();
+        if (n != -1) {
+            Bk = new Kamar();
+            String no_kamar = jTable1.getValueAt(n, 0).toString();
+            String tipe_kamar = jTable1.getValueAt(n, 1).toString();
+            String harga_harian = jTable1.getValueAt(n, 2).toString();
+            String deskripsi = jTable1.getValueAt(n, 3).toString();
+            String gambar = jTable1.getValueAt(n, 4).toString();
+            Bk.setNoKamar(no_kamar);
+            Bk.setTipe(tipe_kamar);
+            Bk.setHargaHarian(harga_harian);
+            Bk.setDeskripsi(deskripsi);
+            Bk.setGambar(gambar);
+
+//            loadImage(gambar);
+//            txtNo.setText(no_kamar);
+//            txtTipe.setText(tipe_kamar);
+//            txtHarga.setText(harga_harian);
+//            txtDesk.setText(deskripsi);
+            
+
+
+//            AddViews(new PreviewKamar());
+//
+//            PreviewKamar pk = new PreviewKamar();
+//
+//            pk.tampilkanData(Bk);
+//            AddViews(pk);
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void txtFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFilterActionPerformed
+        // TODO add your handling code here:
+        String selected = txtFilter.getSelectedItem().toString();
+        String order = "";
+
+        order = switch (selected) {
+            case "Harga Tertinggi" ->
+                " ORDER BY harga_harian DESC";
+            case "Harga Terendah" ->
+                " ORDER BY harga_harian ASC";
+            case "Default" ->
+                "";
+            default ->
+                "";
+        };
+
+        refreshDataKamar(order);
+    }//GEN-LAST:event_txtFilterActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel header;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JPanel preview;
+    private static javax.swing.JTable jTable1;
+    private javax.swing.JComboBox<String> txtFilter;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
+//    private void AddViews(JPanel Dt) {
+//        if (preview.getComponentCount() > 0) {
+//            preview.removeAll();
+//        }
+//        preview.add(Dt, BorderLayout.CENTER);
+//        preview.revalidate();
+//        preview.repaint();
+//    }
+
+    public static void refreshDataKamar(String w) {
+        try {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            for (int i = model.getRowCount() - 1; i >= 0; i--) {
+                model.removeRow(i);
+            }
+
+            Connection K = Koneksi.Go();
+            String Q = "SELECT * FROM kamar WHERE status = 1" + w;
+            Statement S = K.createStatement();
+            ResultSet R = S.executeQuery(Q);
+            while (R.next()) {
+                String noKamar = R.getString("no_kamar");
+                String tipeKamar = R.getString("tipe_kamar");
+                String harga_harian = R.getString("harga_harian");
+                String deskripsi = R.getString("deskripsi");
+                String gambar = R.getNString("gambar");
+                Object[] datakamar = {noKamar, tipeKamar, harga_harian, deskripsi, gambar};
+                model.addRow(datakamar);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private void searchDataKamar() {
+        try {
+
+            String key = txtSearch.getText();
+            String where = " AND ("
+                    + "no_kamar LIKE '%" + key + "%' OR "
+                    + "tipe_kamar LIKE '%" + key + "%' OR "
+                    + "deskripsi LIKE '%" + key + "%' OR "
+                    + "harga_harian LIKE '%" + key + "%')";
+            refreshDataKamar(where);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ada kesalahan saat menggunakan fitur search data" + e.getMessage());
+        }
+    }
+
+//    private void loadImage(String gambar) {
+//        if (txtGambar != null) {
+//            try {
+//                URL url = new URL(txtGambar.getText());
+//                BufferedImage img = ImageIO.read(url);
+//
+//                ImageIcon icon = new ImageIcon(img);
+//                txtGambar.setText(null);
+//                txtGambar.setIcon(null);
+//                txtGambar.setIcon(icon);
+//
+//            } catch (IOException e) {
+//                System.err.println("Gagal memuat gambar dari URL (URL tidak valid atau kosong): " + e.getMessage());
+//            }
+//        }
+//
+//    }
+
 }

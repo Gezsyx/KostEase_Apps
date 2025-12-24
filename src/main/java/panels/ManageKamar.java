@@ -177,13 +177,13 @@ public class ManageKamar extends javax.swing.JPanel {
         jTable1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "id_kamar", "no_kamar", "tipe_kamar", "harga_harian", "deskripsi", "link_gambar"
+                "id_kamar", "no_kamar", "tipe_kamar", "harga_harian", "deskripsi", "link_gambar", "id_status"
             }
         ));
         jTable1.setPreferredSize(new java.awt.Dimension(1610, 670));
@@ -239,12 +239,15 @@ public class ManageKamar extends javax.swing.JPanel {
             String harga_harian = jTable1.getValueAt(n, 3).toString();
             String deskripsi = jTable1.getValueAt(n, 4).toString();
             String gambar = jTable1.getValueAt(n, 5).toString();
+            String status = jTable1.getValueAt(n, 6).toString();
+            int status_kmr = Integer.valueOf(status);
             Dk.setId(ID);
             Dk.setNoKamar(no_kamar);
             Dk.setTipe(tipe_kamar);
             Dk.setHargaHarian(harga_harian);
             Dk.setDeskripsi(deskripsi);
             Dk.setGambar(gambar);
+            Dk.setStatus(status_kmr);
 
         }
         // TODO add your handling code here:
@@ -312,7 +315,8 @@ public class ManageKamar extends javax.swing.JPanel {
                 String harga_harian = R.getString("harga_harian");
                 String deskripsi = R.getString("deskripsi");
                 String link_gambar = R.getString("gambar");
-                Object[] datakamar = {id, noKamar, tipeKamar, harga_harian, deskripsi, link_gambar};
+                int id_sts = R.getInt("status");
+                Object[] datakamar = {id, noKamar, tipeKamar, harga_harian, deskripsi, link_gambar, id_sts};
                 model.addRow(datakamar);
             }
 
@@ -323,16 +327,17 @@ public class ManageKamar extends javax.swing.JPanel {
 
     private void searchDataKamar() {
         try {
-            
-        String key = txtSearch.getText();
-        String where = " WHERE "
-                + "id_kamar LIKE '%" + key + "%' OR "
-                + "no_kamar LIKE '%" + key + "%' OR "
-                + "tipe_kamar LIKE '%" + key + "%' OR "
-                + "harga_harian LIKE '%" + key + "%' OR "
-                + "deskripsi LIKE '%" + key + "%' OR "
-                + "gambar LIKE '%" + key + "%'";
-        refreshDataKamar(where);
+
+            String key = txtSearch.getText();
+            String where = " WHERE "
+                    + "id_kamar LIKE '%" + key + "%' OR "
+                    + "no_kamar LIKE '%" + key + "%' OR "
+                    + "tipe_kamar LIKE '%" + key + "%' OR "
+                    + "harga_harian LIKE '%" + key + "%' OR "
+                    + "deskripsi LIKE '%" + key + "%' OR "
+                    + "status LIKE '%" + key + "%' OR "
+                    + "gambar LIKE '%" + key + "%'";
+            refreshDataKamar(where);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ada kesalahan saat menggunakan fitur search data" + e.getMessage());
         }

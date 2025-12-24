@@ -57,6 +57,8 @@ public class AddKamar extends javax.swing.JDialog {
         labelGambar = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtGambar = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -117,6 +119,11 @@ public class AddKamar extends javax.swing.JDialog {
             }
         });
 
+        jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel8.setText("ID Status");
+
+        txtStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2" }));
+
         javax.swing.GroupLayout utamaLayout = new javax.swing.GroupLayout(utama);
         utama.setLayout(utamaLayout);
         utamaLayout.setHorizontalGroup(
@@ -132,12 +139,14 @@ public class AddKamar extends javax.swing.JDialog {
                                 .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel5)
-                                    .addComponent(jLabel4))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel8))
                                 .addGap(14, 14, 14)
                                 .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtNo, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtTipe, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(utamaLayout.createSequentialGroup()
                                 .addGap(36, 36, 36)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -171,11 +180,15 @@ public class AddKamar extends javax.swing.JDialog {
                         .addGap(33, 33, 33)
                         .addComponent(jLabel5)
                         .addGap(33, 33, 33)
+                        .addComponent(jLabel8)
+                        .addGap(33, 33, 33)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(utamaLayout.createSequentialGroup()
                         .addComponent(txtNo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtTipe, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
@@ -186,7 +199,7 @@ public class AddKamar extends javax.swing.JDialog {
                 .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -263,12 +276,14 @@ public class AddKamar extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelGambar;
     private javax.swing.JTextArea txtDeskripsi;
     private javax.swing.JTextField txtGambar;
     private javax.swing.JTextField txtHarga;
     private javax.swing.JTextField txtNo;
+    private javax.swing.JComboBox<String> txtStatus;
     private javax.swing.JComboBox<String> txtTipe;
     private javax.swing.JPanel utama;
     // End of variables declaration//GEN-END:variables
@@ -280,18 +295,20 @@ public class AddKamar extends javax.swing.JDialog {
             String harga_harian = txtHarga.getText();
             String deskripsi = txtDeskripsi.getText().toString();
             String gambar = txtGambar.getText().toString();
+            String id_status = txtStatus.getSelectedItem().toString();
 
             Connection K = Koneksi.Go();
             String sql = "INSERT INTO kamar "
-                    + "(no_kamar,tipe_kamar, harga_harian, deskripsi, gambar) "
+                    + "(no_kamar,tipe_kamar, harga_harian, deskripsi, gambar,status) "
                     + "VALUES "
-                    + "(?,?,?,?,?)";
+                    + "(?,?,?,?,?,?)";
             PreparedStatement PS = K.prepareStatement(sql);
             PS.setString(1, no_kamar);
             PS.setString(2, tipe);
             PS.setString(3, harga_harian);
             PS.setString(4, deskripsi);
             PS.setString(5, gambar);
+            PS.setString(6, id_status);
             PS.executeUpdate();
 
             ManageKamar.refreshDataKamar("");

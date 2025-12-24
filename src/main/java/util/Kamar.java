@@ -16,6 +16,16 @@ public class Kamar {
     private String harga_harian;
     private String deskripsi;
     private String gambar;
+    private int id_status;
+    
+    public int getStatus() {
+        return id_status;
+    }
+
+    public void setStatus(int stats) {
+        this.id_status = stats;
+    }
+    
 
     public int getId() {
         return id_kamar;

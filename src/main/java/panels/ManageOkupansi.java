@@ -174,13 +174,13 @@ public class ManageOkupansi extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "id_okupansi", "status", "waktu_mulai", "waktu_berakhir", "id_pelanggan", "id_kamar"
+                "id_okupansi", "waktu_mulai", "waktu_berakhir", "id_pelanggan", "id_kamar"
             }
         ));
         jTable1.setPreferredSize(new java.awt.Dimension(1610, 670));
@@ -263,20 +263,18 @@ public class ManageOkupansi extends javax.swing.JPanel {
             jButton3.setEnabled(true);
             Mok = new Okupansi();
             String IDOkps = jTable1.getValueAt(n, 0).toString();
-            String IDKam = jTable1.getValueAt(n, 5).toString();
-            String IDPel = jTable1.getValueAt(n, 4).toString();
+            String IDKam = jTable1.getValueAt(n, 4).toString();
+            String IDPel = jTable1.getValueAt(n, 3).toString();
             int ID = Integer.valueOf(IDOkps);
             int idKam = Integer.valueOf(IDKam);
             int idPel = 0;
             if (IDPel != null && !IDPel.toString().trim().isEmpty()) {
                 idPel = Integer.valueOf(IDPel.toString());
             }
-            String status = jTable1.getValueAt(n, 1).toString();
-            String mulai = jTable1.getValueAt(n, 2) != null ? jTable1.getValueAt(n, 2).toString() : "";
-            String akhir = jTable1.getValueAt(n, 3) != null ? jTable1.getValueAt(n, 3).toString() : "";
+            String mulai = jTable1.getValueAt(n, 1) != null ? jTable1.getValueAt(n, 2).toString() : "";
+            String akhir = jTable1.getValueAt(n, 2) != null ? jTable1.getValueAt(n, 3).toString() : "";
             Mok.setId(ID);
             Mok.setIdKam(idKam);
-            Mok.setStatus(status);
             Mok.setMulai(mulai);
             Mok.setAkhir(akhir);
             Mok.setIdPel(idPel);
@@ -313,12 +311,11 @@ public class ManageOkupansi extends javax.swing.JPanel {
             ResultSet R = S.executeQuery(Q);
             while (R.next()) {
                 int id = R.getInt("id_okupansi");
-                String status = R.getString("status_kamar");
                 String mulai = R.getString("waktu_mulai");
                 String akhir = R.getString("waktu_berakhir");
                 int idPel = R.getInt("id_pelanggan");
                 int idKam = R.getInt("id_kamar");
-                Object[] datausers = {id, status, mulai, akhir, idPel, idKam};
+                Object[] datausers = {id, mulai, akhir, idPel, idKam};
                 model.addRow(datausers);
             }
 
@@ -331,7 +328,6 @@ public class ManageOkupansi extends javax.swing.JPanel {
         String key = txtSearch.getText();
         String where = " WHERE "
                 + "id_okupansi LIKE '%" + key + "%' OR "
-                + "status_kamar LIKE '%" + key + "%' OR "
                 + "waktu_mulai LIKE '%" + key + "%' OR "
                 + "waktu_berakhir LIKE '%" + key + "%' OR "
                 + "id_pelanggan LIKE '%" + key + "%' OR "

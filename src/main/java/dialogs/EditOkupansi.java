@@ -42,13 +42,11 @@ public class EditOkupansi extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtIdKam = new javax.swing.JTextField();
         txtMulai = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        txtStatus = new javax.swing.JComboBox<>();
         txtAkhir = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtIdPel = new javax.swing.JTextField();
@@ -73,9 +71,6 @@ public class EditOkupansi extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel4.setText("Waktu Mulai       :");
 
-        jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel5.setText("Status                   :");
-
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel6.setText("ID Kamar              :");
 
@@ -99,8 +94,6 @@ public class EditOkupansi extends javax.swing.JDialog {
             }
         });
 
-        txtStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KOSONG", "TERISI" }));
-
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel8.setText("ID Pelanggan    :");
 
@@ -118,15 +111,13 @@ public class EditOkupansi extends javax.swing.JDialog {
                     .addGroup(utamaLayout.createSequentialGroup()
                         .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel5)
                             .addComponent(jLabel4)
                             .addComponent(jLabel3)
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtIdKam)
+                            .addComponent(txtIdKam, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                             .addComponent(txtMulai)
-                            .addComponent(txtStatus, javax.swing.GroupLayout.Alignment.TRAILING, 0, 179, Short.MAX_VALUE)
                             .addComponent(txtAkhir)
                             .addComponent(txtIdPel))))
                 .addGap(59, 59, 59))
@@ -144,11 +135,7 @@ public class EditOkupansi extends javax.swing.JDialog {
                 .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtIdKam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(32, 32, 32)
                 .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtMulai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -164,7 +151,7 @@ public class EditOkupansi extends javax.swing.JDialog {
                 .addGroup(utamaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
 
         getContentPane().add(utama, java.awt.BorderLayout.CENTER);
@@ -188,7 +175,6 @@ public class EditOkupansi extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         txtIdKam.setText(String.valueOf(Edok.getIdKam()));
-        txtStatus.setSelectedItem(Edok.getStatus());
         txtMulai.setText(Edok.getMulai());
         txtAkhir.setText(Edok.getAkhir());
         if (Edok.getIdPel() != 0) {
@@ -242,21 +228,18 @@ public class EditOkupansi extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField txtAkhir;
     private javax.swing.JTextField txtIdKam;
     private javax.swing.JTextField txtIdPel;
     private javax.swing.JTextField txtMulai;
-    private javax.swing.JComboBox<String> txtStatus;
     private javax.swing.JPanel utama;
     // End of variables declaration//GEN-END:variables
 
     private void editData() {
         try {
             String idKam = txtIdKam.getText();
-            String status = txtStatus.getSelectedItem().toString();
             String mulai = txtMulai.getText();
             String akhir = txtAkhir.getText();
             String idPel = txtIdPel.getText().trim();
@@ -270,7 +253,6 @@ public class EditOkupansi extends javax.swing.JDialog {
 
             String Q = "UPDATE okupansi_kamar SET "
                     + "id_kamar=?, "
-                    + "status_kamar=?, "
                     + "waktu_mulai=?, "
                     + "waktu_berakhir=?, "
                     + "id_pelanggan=? "
@@ -280,15 +262,14 @@ public class EditOkupansi extends javax.swing.JDialog {
             Connection C = Koneksi.Go();
             PreparedStatement PS = C.prepareStatement(Q);
             PS.setInt(1, idkamar);
-            PS.setString(2, status);
-            PS.setString(3, mulai);
-            PS.setString(4, akhir);
+            PS.setString(2, mulai);
+            PS.setString(3, akhir);
             if (idPelanggan != null) {
-                PS.setInt(5, idPelanggan);
+                PS.setInt(4, idPelanggan);
             } else {
-                PS.setNull(5, java.sql.Types.INTEGER);
+                PS.setNull(4, java.sql.Types.INTEGER);
             }
-            PS.setInt(6, Edok.getId());
+            PS.setInt(5, Edok.getId());
             PS.executeUpdate();
 
             ManageOkupansi.refreshDataOkupansi("");

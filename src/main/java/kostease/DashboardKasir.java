@@ -5,7 +5,10 @@
 package kostease;
 
 import dialogs.Profil;
+import java.awt.BorderLayout;
 import java.awt.Frame;
+import javax.swing.JPanel;
+import panels.BeliKamar;
 import util.Pegawai;
 
 /**
@@ -196,6 +199,7 @@ public class DashboardKasir extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btnProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdukActionPerformed
+        AddViews(new BeliKamar());
         // TODO add your handling code here:
     }//GEN-LAST:event_btnProdukActionPerformed
 
@@ -252,4 +256,13 @@ public class DashboardKasir extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel sidebar;
     // End of variables declaration//GEN-END:variables
+
+    private void AddViews(JPanel Dt) {
+        if (form.getComponentCount() > 0) {
+            form.removeAll();
+        }
+        form.add(Dt, BorderLayout.CENTER);
+        form.revalidate();
+        form.repaint();
+    }
 }
