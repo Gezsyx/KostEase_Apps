@@ -13,6 +13,7 @@ public class Kamar {
     private int id_kamar;
     private String no_kamar;
     private String tipe_kamar;
+    private String hpp;
     private String harga_harian;
     private String deskripsi;
     private String gambar;
@@ -49,6 +50,14 @@ public class Kamar {
 
     public void setTipe(String tipe_kamar) {
         this.tipe_kamar = tipe_kamar;
+    }
+    
+    public String getHpp(){
+        return hpp;
+    }
+    
+    public void setHpp(String hpp){
+        this.hpp = hpp;
     }
 
     public String getHargaHarian() {

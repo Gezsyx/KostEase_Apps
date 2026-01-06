@@ -24,6 +24,7 @@ public class AddOkupansi extends javax.swing.JDialog {
     public AddOkupansi(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

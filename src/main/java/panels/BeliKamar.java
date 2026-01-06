@@ -4,21 +4,15 @@
  */
 package panels;
 
-import java.awt.BorderLayout;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import util.Kamar;
 import util.Koneksi;
-import panels.PreviewKamar;
+import util.Pegawai;
+import dialogs.PreviewKamar;
 
 /**
  *
@@ -27,12 +21,14 @@ import panels.PreviewKamar;
 public class BeliKamar extends javax.swing.JPanel {
 
     Kamar Bk;
+    Pegawai Pg;
 
     /**
      * Creates new form BeliKamar
      */
-    public BeliKamar() {
+    public BeliKamar(Pegawai pgw) {
         initComponents();
+        this.Pg = pgw;
         refreshDataKamar("");
 
     }
@@ -53,14 +49,38 @@ public class BeliKamar extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         txtSearch = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        txtPreview = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelKatalog = new javax.swing.JTable();
+        btnBayar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtJumlahhari = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableKeranjang = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        txtNama = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtNoHp = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        cmbMetodeBayar = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblRincian = new javax.swing.JTable();
+        jLabel10 = new javax.swing.JLabel();
+        txtTotalHarga = new javax.swing.JTextField();
+        btnMasukKeranjang = new javax.swing.JButton();
+        btnHapusKeranjang = new javax.swing.JButton();
+        btnCheckout = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1610, 805));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         header.setBackground(new java.awt.Color(255, 255, 255));
@@ -102,6 +122,17 @@ public class BeliKamar extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel5.setText("Urutkan :");
 
+        txtPreview.setBackground(new java.awt.Color(51, 204, 255));
+        txtPreview.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        txtPreview.setForeground(new java.awt.Color(255, 255, 255));
+        txtPreview.setText("Preview Kamar");
+        txtPreview.setEnabled(false);
+        txtPreview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPreviewActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
@@ -109,64 +140,237 @@ public class BeliKamar extends javax.swing.JPanel {
             .addGroup(headerLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(headerLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(headerLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(1023, 1023, 1023)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 47, Short.MAX_VALUE))
+                        .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(txtPreview)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 912, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15))))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(headerLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 14, Short.MAX_VALUE))
         );
 
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1620, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelKatalog.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "No Kamar", "Tipe Kamar", "Harga", "deskripsi"
+                "id", "No Kamar", "Tipe Kamar", "Harga", "deskripsi", "gambar"
             }
         ));
-        jTable1.setRowHeight(40);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabelKatalog.setRowHeight(40);
+        tabelKatalog.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                tabelKatalogMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabelKatalog);
+        if (tabelKatalog.getColumnModel().getColumnCount() > 0) {
+            tabelKatalog.getColumnModel().getColumn(5).setMinWidth(0);
+            tabelKatalog.getColumnModel().getColumn(5).setMaxWidth(0);
+        }
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 1620, 640));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 1620, 300));
 
-        jButton1.setBackground(new java.awt.Color(0, 255, 51));
+        btnBayar.setBackground(new java.awt.Color(51, 255, 51));
+        btnBayar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnBayar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBayar.setText("Bayar");
+        btnBayar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBayarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBayar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1530, 770, -1, 30));
+
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel2.setText("Jumlah hari Penyewaan :");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 410, -1, 30));
+        jPanel1.add(txtJumlahhari, new org.netbeans.lib.awtextra.AbsoluteConstraints(1320, 410, 90, 30));
+
+        tableKeranjang.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "id", "No. Kamar", "Harga", "Jumlah", "Total"
+            }
+        ));
+        jScrollPane2.setViewportView(tableKeranjang);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 890, 290));
+
+        jLabel3.setFont(new java.awt.Font("Roboto", 3, 18)); // NOI18N
+        jLabel3.setText("Keranjang");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 100, -1));
+
+        jLabel4.setText("Nama Pelanggan :");
+
+        jLabel6.setText("No. HP                   :");
+
+        jLabel7.setText("Email                      :");
+
+        jLabel8.setText("Metode Pembayaran :");
+
+        cmbMetodeBayar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tunai", "NON - TUNAI" }));
+
+        jLabel9.setText("Rincian:");
+
+        tblRincian.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nama", "Harga"
+            }
+        ));
+        jScrollPane3.setViewportView(tblRincian);
+
+        jLabel10.setText("Total :");
+
+        txtTotalHarga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalHargaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtNoHp, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbMetodeBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(67, 67, 67)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTotalHarga, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNoHp, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbMetodeBayar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTotalHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(69, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 470, 710, 290));
+
+        btnMasukKeranjang.setBackground(new java.awt.Color(0, 255, 51));
+        btnMasukKeranjang.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnMasukKeranjang.setForeground(new java.awt.Color(255, 255, 255));
+        btnMasukKeranjang.setText("Masukan Keranjang");
+        btnMasukKeranjang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMasukKeranjangActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnMasukKeranjang, new org.netbeans.lib.awtextra.AbsoluteConstraints(1430, 410, -1, 30));
+
+        btnHapusKeranjang.setBackground(new java.awt.Color(255, 51, 0));
+        btnHapusKeranjang.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnHapusKeranjang.setForeground(new java.awt.Color(255, 255, 255));
+        btnHapusKeranjang.setText("Hapus dari Keranjang");
+        btnHapusKeranjang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusKeranjangActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnHapusKeranjang, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 770, -1, 30));
+
+        btnCheckout.setBackground(new java.awt.Color(255, 204, 51));
+        btnCheckout.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnCheckout.setForeground(new java.awt.Color(255, 255, 255));
+        btnCheckout.setText("Checkout");
+        btnCheckout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckoutActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCheckout, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 770, -1, 30));
+
+        jButton1.setBackground(new java.awt.Color(255, 51, 0));
         jButton1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Masukan Keranjang");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1420, 760, 180, 30));
-
-        jButton2.setBackground(new java.awt.Color(102, 204, 255));
-        jButton2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Lihat Keranjang");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 760, 160, 30));
+        jButton1.setText("Batal");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1430, 770, -1, 30));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -185,85 +389,230 @@ public class BeliKamar extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchKeyReleased
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int n = jTable1.getSelectedRow();
+    private void tabelKatalogMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelKatalogMouseClicked
+        int n = tabelKatalog.getSelectedRow();
         if (n != -1) {
+            txtPreview.setEnabled(true);
             Bk = new Kamar();
-            String no_kamar = jTable1.getValueAt(n, 0).toString();
-            String tipe_kamar = jTable1.getValueAt(n, 1).toString();
-            String harga_harian = jTable1.getValueAt(n, 2).toString();
-            String deskripsi = jTable1.getValueAt(n, 3).toString();
-            String gambar = jTable1.getValueAt(n, 4).toString();
+            String IDkmr = tabelKatalog.getValueAt(n, 0).toString();
+            int ID = Integer.valueOf(IDkmr);
+            String no_kamar = tabelKatalog.getValueAt(n, 1).toString();
+            String tipe_kamar = tabelKatalog.getValueAt(n, 2).toString();
+            String harga_harian = tabelKatalog.getValueAt(n, 3).toString();
+            String deskripsi = tabelKatalog.getValueAt(n, 4).toString();
+            String gambar = tabelKatalog.getValueAt(n, 5).toString();
+            Bk.setId(ID);
             Bk.setNoKamar(no_kamar);
             Bk.setTipe(tipe_kamar);
             Bk.setHargaHarian(harga_harian);
             Bk.setDeskripsi(deskripsi);
             Bk.setGambar(gambar);
-
-//            loadImage(gambar);
-//            txtNo.setText(no_kamar);
-//            txtTipe.setText(tipe_kamar);
-//            txtHarga.setText(harga_harian);
-//            txtDesk.setText(deskripsi);
-            
-
-
-//            AddViews(new PreviewKamar());
-//
-//            PreviewKamar pk = new PreviewKamar();
-//
-//            pk.tampilkanData(Bk);
-//            AddViews(pk);
         }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_tabelKatalogMouseClicked
 
     private void txtFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFilterActionPerformed
         // TODO add your handling code here:
-        String selected = txtFilter.getSelectedItem().toString();
-        String order = "";
-
-        order = switch (selected) {
-            case "Harga Tertinggi" ->
-                " ORDER BY harga_harian DESC";
-            case "Harga Terendah" ->
-                " ORDER BY harga_harian ASC";
-            case "Default" ->
-                "";
-            default ->
-                "";
-        };
-
-        refreshDataKamar(order);
+        urutKamar();
     }//GEN-LAST:event_txtFilterActionPerformed
+
+    private void btnBayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBayarActionPerformed
+        bayarKamar();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBayarActionPerformed
+
+    private void txtPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPreviewActionPerformed
+        if (tabelKatalog.getSelectedRow() != -1) {
+            PreviewKamar ek = new PreviewKamar(null, true);
+            ek.Pk = Bk;
+            ek.setVisible(true);
+        } else {
+            //
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPreviewActionPerformed
+
+    private void btnMasukKeranjangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasukKeranjangActionPerformed
+//        int row = tabelKatalog.getSelectedRow();
+//        if (row == -1) {
+//            JOptionPane.showMessageDialog(this, "Pilih kamar terlebih dahulu!");
+//            return;
+//        }
+//
+//        String hariStr = txtJumlahhari.getText();
+//        if (hariStr.isEmpty() || !hariStr.matches("\\d+")) {
+//            JOptionPane.showMessageDialog(this, "Masukkan jumlah hari yang valid (angka saja)!");
+//            return;
+//        }
+//
+//        try {
+//            // Ambil data dari tabel katalog
+//            String noKamar = tabelKatalog.getValueAt(row, 0).toString();
+//
+//            // GUNAKAN Double.parseDouble untuk menangani string seperti "110000.00"
+//            double harga = Double.parseDouble(tabelKatalog.getValueAt(row, 2).toString());
+//
+//            int jumlahHari = Integer.parseInt(hariStr);
+//
+//            // Hitung total (gunakan double agar akurat)
+//            double total = harga * (double) jumlahHari;
+//
+//            // Masukkan ke tabel keranjang
+//            DefaultTableModel model = (DefaultTableModel) tableKeranjang.getModel();
+//
+//            // Kita konversi ke (long) saat menampilkan jika ingin menghilangkan .00 di tabel
+//            model.addRow(new Object[]{
+//                noKamar,
+//                (long) harga,
+//                jumlahHari,
+//                (long) total
+//            });
+//
+//            txtJumlahhari.setText(""); // Bersihkan input
+//
+//        } catch (NumberFormatException e) {
+//            JOptionPane.showMessageDialog(this, "Kesalahan format angka: " + e.getMessage());
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+//        }
+
+        int row = tabelKatalog.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih kamar terlebih dahulu!");
+            return;
+        }
+
+        String hariStr = txtJumlahhari.getText();
+        if (hariStr.isEmpty() || !hariStr.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Masukkan jumlah hari yang valid (angka saja)!");
+            return;
+        }
+
+        try {
+            // 1. Ambil ID dari kolom 0 tabelKatalog
+            String idKamar = tabelKatalog.getValueAt(row, 0).toString();
+
+            // 2. Ambil No Kamar dari kolom 1 tabelKatalog
+            String noKamar = tabelKatalog.getValueAt(row, 1).toString();
+
+            // 3. Ambil Harga dari kolom 3 (sesuaikan dengan index kolom harga di tabelKatalog Anda)
+            // Gunakan Double.parseDouble untuk menangani format decimal dari database
+            double harga = Double.parseDouble(tabelKatalog.getValueAt(row, 3).toString());
+
+            int jumlahHari = Integer.parseInt(hariStr);
+
+            // 4. Hitung total
+            double total = harga * (double) jumlahHari;
+
+            // 5. Masukkan ke tableKeranjang (Sekarang menyertakan ID di awal)
+            DefaultTableModel model = (DefaultTableModel) tableKeranjang.getModel();
+
+            // Pastikan urutan array sesuai dengan kolom tableKeranjang: id, No. Kamar, Harga, Jumlah, Total
+            model.addRow(new Object[]{
+                idKamar, // Masuk ke kolom ID
+                noKamar, // Masuk ke kolom No. Kamar
+                (long) harga, // Masuk ke kolom Harga
+                jumlahHari, // Masuk ke kolom Jumlah
+                (long) total // Masuk ke kolom Total
+            });
+
+            txtJumlahhari.setText(""); // Bersihkan input
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Kesalahan format angka: " + e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMasukKeranjangActionPerformed
+
+    private void btnHapusKeranjangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusKeranjangActionPerformed
+        int row = tableKeranjang.getSelectedRow();
+        if (row != -1) {
+            DefaultTableModel model = (DefaultTableModel) tableKeranjang.getModel();
+            model.removeRow(row);
+        } else {
+            JOptionPane.showMessageDialog(this, "Pilih baris di keranjang yang ingin dihapus.");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnHapusKeranjangActionPerformed
+
+    private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
+        DefaultTableModel modelKeranjang = (DefaultTableModel) tableKeranjang.getModel();
+        DefaultTableModel modelRincian = (DefaultTableModel) tblRincian.getModel();
+
+        if (modelKeranjang.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Keranjang masih kosong!");
+            return;
+        }
+
+        // Bersihkan rincian lama
+        modelRincian.setRowCount(0);
+
+        // Pindahkan data (No Kamar dan Total Harga)
+        for (int i = 0; i < modelKeranjang.getRowCount(); i++) {
+            Object item = modelKeranjang.getValueAt(i, 1); // No Kamar
+            Object subtotal = modelKeranjang.getValueAt(i, 4); // Total
+            modelRincian.addRow(new Object[]{item, subtotal});
+        }
+
+        hitungTotalHarga();
+        JOptionPane.showMessageDialog(this, "Silahkan lengkapi data pelanggan.");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCheckoutActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        resetForm();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtTotalHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalHargaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalHargaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBayar;
+    private javax.swing.JButton btnCheckout;
+    private javax.swing.JButton btnHapusKeranjang;
+    private javax.swing.JButton btnMasukKeranjang;
+    private javax.swing.JComboBox<String> cmbMetodeBayar;
     private javax.swing.JPanel header;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private static javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private static javax.swing.JTable tabelKatalog;
+    private javax.swing.JTable tableKeranjang;
+    private javax.swing.JTable tblRincian;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JComboBox<String> txtFilter;
+    private javax.swing.JTextField txtJumlahhari;
+    private javax.swing.JTextField txtNama;
+    private javax.swing.JTextField txtNoHp;
+    private javax.swing.JButton txtPreview;
     private javax.swing.JTextField txtSearch;
+    private javax.swing.JTextField txtTotalHarga;
     // End of variables declaration//GEN-END:variables
-//    private void AddViews(JPanel Dt) {
-//        if (preview.getComponentCount() > 0) {
-//            preview.removeAll();
-//        }
-//        preview.add(Dt, BorderLayout.CENTER);
-//        preview.revalidate();
-//        preview.repaint();
-//    }
 
     public static void refreshDataKamar(String w) {
         try {
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            DefaultTableModel model = (DefaultTableModel) tabelKatalog.getModel();
             for (int i = model.getRowCount() - 1; i >= 0; i--) {
                 model.removeRow(i);
             }
@@ -273,12 +622,13 @@ public class BeliKamar extends javax.swing.JPanel {
             Statement S = K.createStatement();
             ResultSet R = S.executeQuery(Q);
             while (R.next()) {
+                int id = R.getInt("id_kamar");
                 String noKamar = R.getString("no_kamar");
                 String tipeKamar = R.getString("tipe_kamar");
                 String harga_harian = R.getString("harga_harian");
                 String deskripsi = R.getString("deskripsi");
                 String gambar = R.getNString("gambar");
-                Object[] datakamar = {noKamar, tipeKamar, harga_harian, deskripsi, gambar};
+                Object[] datakamar = {id, noKamar, tipeKamar, harga_harian, deskripsi, gambar};
                 model.addRow(datakamar);
             }
 
@@ -294,6 +644,7 @@ public class BeliKamar extends javax.swing.JPanel {
             String where = " AND ("
                     + "no_kamar LIKE '%" + key + "%' OR "
                     + "tipe_kamar LIKE '%" + key + "%' OR "
+                    + "id_kamar LIKE '%" + key + "%' OR "
                     + "deskripsi LIKE '%" + key + "%' OR "
                     + "harga_harian LIKE '%" + key + "%')";
             refreshDataKamar(where);
@@ -302,22 +653,187 @@ public class BeliKamar extends javax.swing.JPanel {
         }
     }
 
-//    private void loadImage(String gambar) {
-//        if (txtGambar != null) {
-//            try {
-//                URL url = new URL(txtGambar.getText());
-//                BufferedImage img = ImageIO.read(url);
+    private void urutKamar() {
+        String selected = txtFilter.getSelectedItem().toString();
+        String order = "";
+
+        order = switch (selected) {
+            case "Harga Tertinggi" ->
+                " ORDER BY harga_harian DESC";
+            case "Harga Terendah" ->
+                " ORDER BY harga_harian ASC";
+            case "Default" ->
+                "";
+            default ->
+                "";
+        };
+
+        refreshDataKamar(order);
+    }
+
+    private void hitungTotalHarga() {
+        DefaultTableModel model = (DefaultTableModel) tableKeranjang.getModel();
+        double totalKeseluruhan = 0;
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            // Ambil nilai dari kolom 'Total' (index 3)
+            double subtotal = Double.parseDouble(model.getValueAt(i, 4).toString());
+            totalKeseluruhan += subtotal;
+        }
+
+        // Set ke textfield total harga
+        txtTotalHarga.setText(String.valueOf((long) totalKeseluruhan));
+    }
+
+//    private void bayarKamar() {
+//        String nama = txtNama.getText();
+//        String noHp = txtNoHp.getText();
+//        String email = txtEmail.getText();
 //
-//                ImageIcon icon = new ImageIcon(img);
-//                txtGambar.setText(null);
-//                txtGambar.setIcon(null);
-//                txtGambar.setIcon(icon);
-//
-//            } catch (IOException e) {
-//                System.err.println("Gagal memuat gambar dari URL (URL tidak valid atau kosong): " + e.getMessage());
-//            }
+//        // Validasi input
+//        if (nama.isEmpty() || noHp.isEmpty() || email.isEmpty() || tblRincian.getRowCount() == 0) {
+//            JOptionPane.showMessageDialog(this, "Lengkapi data pelanggan dan rincian pembelian terlebih dahulu!");
+//            return;
 //        }
 //
+//        try {
+//            Connection K = Koneksi.Go();
+//            K.setAutoCommit(false); // Memulai transaksi agar data pelanggan dan status kamar update bersamaan
+//
+//            // 1. Simpan data ke tabel pelanggan
+//            String queryPelanggan = "INSERT INTO pelanggan (nama, no_hp, email) VALUES (?, ?, ?)";
+//            java.sql.PreparedStatement psPelanggan = K.prepareStatement(queryPelanggan, java.sql.Statement.RETURN_GENERATED_KEYS);
+//            psPelanggan.setString(1, nama);
+//            psPelanggan.setString(2, noHp);
+//            psPelanggan.setString(3, email);
+//            psPelanggan.executeUpdate();
+//
+//            // Ambil ID pelanggan yang baru (Auto Increment)
+//            java.sql.ResultSet rs = psPelanggan.getGeneratedKeys();
+//            int idPelanggan = 0;
+//            if (rs.next()) {
+//                idPelanggan = rs.getInt(1);
+//            }
+//
+//            // 2. Update status kamar menjadi 2 (Terisi/Dibeli)
+//            // Kita ambil semua no_kamar yang ada di tblRincian
+//            String queryUpdateKamar = "UPDATE kamar SET status = 2 WHERE no_kamar = ?";
+//            java.sql.PreparedStatement psUpdateKamar = K.prepareStatement(queryUpdateKamar);
+//
+//            for (int i = 0; i < tblRincian.getRowCount(); i++) {
+//                String noKamar = tblRincian.getValueAt(i, 0).toString(); // Kolom 0 adalah No Kamar
+//                psUpdateKamar.setString(1, noKamar);
+//                psUpdateKamar.addBatch(); // Gunakan batch agar lebih cepat
+//            }
+//            psUpdateKamar.executeBatch();
+//
+//            // Commit transaksi
+//            K.commit();
+//
+//            JOptionPane.showMessageDialog(this, "Pembayaran Berhasil!\nID Pelanggan: " + idPelanggan);
+//
+//            // Reset Form dan Refresh Tabel Katalog
+//            resetForm();
+//            refreshDataKamar(""); // Panggil ini agar kamar yang statusnya 2 hilang dari katalog
+//
+//        } catch (Exception e) {
+//            try {
+//                Connection K = Koneksi.Go();
+//                K.rollback(); // Batalkan jika ada error di tengah jalan
+//            } catch (java.sql.SQLException ex) {
+//                System.err.println(ex.getMessage());
+//            }
+//            JOptionPane.showMessageDialog(this, "Gagal memproses pembayaran: " + e.getMessage());
+//        }
 //    }
+    private void bayarKamar() {
+        String nama = txtNama.getText();
+        String noHp = txtNoHp.getText();
+        String email = txtEmail.getText();
+        String metode = cmbMetodeBayar.getSelectedItem().toString();
+        String totalStr = txtTotalHarga.getText();
+
+        if (nama.isEmpty() || tblRincian.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Lengkapi data pelanggan dan rincian!");
+            return;
+        }
+
+        try {
+            Connection K = Koneksi.Go();
+            K.setAutoCommit(false);
+
+            // 1. Simpan/Ambil Pelanggan
+            String queryPelanggan = "INSERT INTO pelanggan (nama, no_hp, email) VALUES (?, ?, ?)";
+            java.sql.PreparedStatement psP = K.prepareStatement(queryPelanggan, Statement.RETURN_GENERATED_KEYS);
+            psP.setString(1, nama);
+            psP.setString(2, noHp);
+            psP.setString(3, email);
+            psP.executeUpdate();
+            ResultSet rsP = psP.getGeneratedKeys();
+            int idPelanggan = rsP.next() ? rsP.getInt(1) : 0;
+
+            // 2. Simpan ke Tabel Pembayaran (Sesuai Gambar 1)
+            String queryBayar = "INSERT INTO pembayaran (total_harga, metode_pembayaran, id_pegawai, id_pelanggan) VALUES (?, ?, ?, ?)";
+            java.sql.PreparedStatement psB = K.prepareStatement(queryBayar, Statement.RETURN_GENERATED_KEYS);
+            psB.setDouble(1, Double.parseDouble(totalStr));
+            psB.setString(2, metode);
+            psB.setInt(3, this.Pg.getId()); // Mengambil ID dari pegawai yang login
+            psB.setInt(4, idPelanggan);
+            psB.executeUpdate();
+
+            ResultSet rsB = psB.getGeneratedKeys();
+            int idPembayaran = rsB.next() ? rsB.getInt(1) : 0;
+
+            // 3. Simpan ke Detail & Update Status Kamar (Sesuai Gambar 2)
+            String queryDetail = "INSERT INTO detail_pembayaran (jumlah_pembayaran, harga, subtotal, id_pembayaran, id_kamar) VALUES (?, ?, ?, ?, ?)";
+            java.sql.PreparedStatement psD = K.prepareStatement(queryDetail);
+
+            String queryUpdKamar = "UPDATE kamar SET status = 2 WHERE id_kamar = ?";
+            java.sql.PreparedStatement psU = K.prepareStatement(queryUpdKamar);
+
+            DefaultTableModel modelK = (DefaultTableModel) tableKeranjang.getModel();
+            for (int i = 0; i < modelK.getRowCount(); i++) {
+                int idKamar = Integer.parseInt(modelK.getValueAt(i, 0).toString());
+                double harga = Double.parseDouble(modelK.getValueAt(i, 2).toString());
+                int qty = Integer.parseInt(modelK.getValueAt(i, 3).toString());
+                double subtotal = Double.parseDouble(modelK.getValueAt(i, 4).toString());
+
+                // Insert Detail
+                psD.setInt(1, qty);
+                psD.setDouble(2, harga);
+                psD.setDouble(3, subtotal);
+                psD.setInt(4, idPembayaran);
+                psD.setInt(5, idKamar);
+                psD.addBatch();
+
+                // Update Status
+                psU.setInt(1, idKamar);
+                psU.addBatch();
+            }
+            psD.executeBatch();
+            psU.executeBatch();
+
+            K.commit();
+
+            // 4. Tampilkan Nota
+//            tampilkanNota(idPembayaran);
+
+            resetForm();
+            refreshDataKamar("");
+
+        } catch (Exception e) {
+            // Logika rollback...
+            JOptionPane.showMessageDialog(this, "Transaksi Gagal: " + e.getMessage());
+        }
+    }
+
+    private void resetForm() {
+        txtNama.setText("");
+        txtNoHp.setText("");
+        txtEmail.setText("");
+        txtTotalHarga.setText("");
+        ((DefaultTableModel) tableKeranjang.getModel()).setRowCount(0);
+        ((DefaultTableModel) tblRincian.getModel()).setRowCount(0);
+    }
 
 }

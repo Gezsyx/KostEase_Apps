@@ -4,29 +4,20 @@
  */
 package kostease;
 
-import dialogs.Profil;
-import java.awt.BorderLayout;
 import java.awt.Frame;
-import javax.swing.JPanel;
-import panels.BeliKamar;
-import panels.LaporanKeuanganHarian;
-import panels.RiwayatTransaksi;
-import util.Pegawai;
 
 /**
  *
  * @author ASUS
  */
-public class DashboardKasir extends javax.swing.JFrame {
-
-    Pegawai Usr;
-
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardKasir.class.getName());
+public class DashboardOwner extends javax.swing.JFrame {
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardOwner.class.getName());
 
     /**
-     * Creates new form DashboardKasir
+     * Creates new form DashboardOwner
      */
-    public DashboardKasir() {
+    public DashboardOwner() {
         initComponents();
     }
 
@@ -53,11 +44,6 @@ public class DashboardKasir extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
         background.setMinimumSize(new java.awt.Dimension(1920, 1080));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -136,7 +122,7 @@ public class DashboardKasir extends javax.swing.JFrame {
         });
 
         jButton5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jButton5.setText("Riwayat Transaksi");
+        jButton5.setText("Riwayat Pembelian");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -189,8 +175,7 @@ public class DashboardKasir extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Profil Pf = new Profil(null, true, this.Usr);
-        Pf.setVisible(true);         // TODO add your handling code here:
+       // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -201,22 +186,17 @@ public class DashboardKasir extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btnProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdukActionPerformed
-        AddViews(new BeliKamar(this.Usr));
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnProdukActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        AddViews(new LaporanKeuanganHarian(this.Usr.getId()));
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        jLabel2.setText(Usr.getUsername());
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowOpened
-
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        AddViews(new RiwayatTransaksi());        // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
@@ -241,7 +221,7 @@ public class DashboardKasir extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new DashboardKasir().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new DashboardOwner().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -258,13 +238,4 @@ public class DashboardKasir extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel sidebar;
     // End of variables declaration//GEN-END:variables
-
-    private void AddViews(JPanel Dt) {
-        if (form.getComponentCount() > 0) {
-            form.removeAll();
-        }
-        form.add(Dt, BorderLayout.CENTER);
-        form.revalidate();
-        form.repaint();
-    }
 }
