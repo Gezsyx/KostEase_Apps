@@ -434,48 +434,7 @@ public class BeliKamar extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPreviewActionPerformed
 
     private void btnMasukKeranjangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasukKeranjangActionPerformed
-//        int row = tabelKatalog.getSelectedRow();
-//        if (row == -1) {
-//            JOptionPane.showMessageDialog(this, "Pilih kamar terlebih dahulu!");
-//            return;
-//        }
-//
-//        String hariStr = txtJumlahhari.getText();
-//        if (hariStr.isEmpty() || !hariStr.matches("\\d+")) {
-//            JOptionPane.showMessageDialog(this, "Masukkan jumlah hari yang valid (angka saja)!");
-//            return;
-//        }
-//
-//        try {
-//            // Ambil data dari tabel katalog
-//            String noKamar = tabelKatalog.getValueAt(row, 0).toString();
-//
-//            // GUNAKAN Double.parseDouble untuk menangani string seperti "110000.00"
-//            double harga = Double.parseDouble(tabelKatalog.getValueAt(row, 2).toString());
-//
-//            int jumlahHari = Integer.parseInt(hariStr);
-//
-//            // Hitung total (gunakan double agar akurat)
-//            double total = harga * (double) jumlahHari;
-//
-//            // Masukkan ke tabel keranjang
-//            DefaultTableModel model = (DefaultTableModel) tableKeranjang.getModel();
-//
-//            // Kita konversi ke (long) saat menampilkan jika ingin menghilangkan .00 di tabel
-//            model.addRow(new Object[]{
-//                noKamar,
-//                (long) harga,
-//                jumlahHari,
-//                (long) total
-//            });
-//
-//            txtJumlahhari.setText(""); // Bersihkan input
-//
-//        } catch (NumberFormatException e) {
-//            JOptionPane.showMessageDialog(this, "Kesalahan format angka: " + e.getMessage());
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-//        }
+//       
 
         int row = tabelKatalog.getSelectedRow();
         if (row == -1) {
@@ -490,34 +449,28 @@ public class BeliKamar extends javax.swing.JPanel {
         }
 
         try {
-            // 1. Ambil ID dari kolom 0 tabelKatalog
+
             String idKamar = tabelKatalog.getValueAt(row, 0).toString();
 
-            // 2. Ambil No Kamar dari kolom 1 tabelKatalog
             String noKamar = tabelKatalog.getValueAt(row, 1).toString();
 
-            // 3. Ambil Harga dari kolom 3 (sesuaikan dengan index kolom harga di tabelKatalog Anda)
-            // Gunakan Double.parseDouble untuk menangani format decimal dari database
             double harga = Double.parseDouble(tabelKatalog.getValueAt(row, 3).toString());
 
             int jumlahHari = Integer.parseInt(hariStr);
 
-            // 4. Hitung total
             double total = harga * (double) jumlahHari;
 
-            // 5. Masukkan ke tableKeranjang (Sekarang menyertakan ID di awal)
             DefaultTableModel model = (DefaultTableModel) tableKeranjang.getModel();
 
-            // Pastikan urutan array sesuai dengan kolom tableKeranjang: id, No. Kamar, Harga, Jumlah, Total
             model.addRow(new Object[]{
-                idKamar, // Masuk ke kolom ID
-                noKamar, // Masuk ke kolom No. Kamar
-                (long) harga, // Masuk ke kolom Harga
-                jumlahHari, // Masuk ke kolom Jumlah
-                (long) total // Masuk ke kolom Total
+                idKamar, 
+                noKamar, 
+                (long) harga, 
+                jumlahHari,
+                (long) total
             });
 
-            txtJumlahhari.setText(""); // Bersihkan input
+            txtJumlahhari.setText("");
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Kesalahan format angka: " + e.getMessage());
@@ -548,13 +501,11 @@ public class BeliKamar extends javax.swing.JPanel {
             return;
         }
 
-        // Bersihkan rincian lama
         modelRincian.setRowCount(0);
 
-        // Pindahkan data (No Kamar dan Total Harga)
         for (int i = 0; i < modelKeranjang.getRowCount(); i++) {
-            Object item = modelKeranjang.getValueAt(i, 1); // No Kamar
-            Object subtotal = modelKeranjang.getValueAt(i, 4); // Total
+            Object item = modelKeranjang.getValueAt(i, 1); 
+            Object subtotal = modelKeranjang.getValueAt(i, 4); 
             modelRincian.addRow(new Object[]{item, subtotal});
         }
 
@@ -676,76 +627,13 @@ public class BeliKamar extends javax.swing.JPanel {
         double totalKeseluruhan = 0;
 
         for (int i = 0; i < model.getRowCount(); i++) {
-            // Ambil nilai dari kolom 'Total' (index 3)
             double subtotal = Double.parseDouble(model.getValueAt(i, 4).toString());
             totalKeseluruhan += subtotal;
         }
 
-        // Set ke textfield total harga
         txtTotalHarga.setText(String.valueOf((long) totalKeseluruhan));
     }
 
-//    private void bayarKamar() {
-//        String nama = txtNama.getText();
-//        String noHp = txtNoHp.getText();
-//        String email = txtEmail.getText();
-//
-//        // Validasi input
-//        if (nama.isEmpty() || noHp.isEmpty() || email.isEmpty() || tblRincian.getRowCount() == 0) {
-//            JOptionPane.showMessageDialog(this, "Lengkapi data pelanggan dan rincian pembelian terlebih dahulu!");
-//            return;
-//        }
-//
-//        try {
-//            Connection K = Koneksi.Go();
-//            K.setAutoCommit(false); // Memulai transaksi agar data pelanggan dan status kamar update bersamaan
-//
-//            // 1. Simpan data ke tabel pelanggan
-//            String queryPelanggan = "INSERT INTO pelanggan (nama, no_hp, email) VALUES (?, ?, ?)";
-//            java.sql.PreparedStatement psPelanggan = K.prepareStatement(queryPelanggan, java.sql.Statement.RETURN_GENERATED_KEYS);
-//            psPelanggan.setString(1, nama);
-//            psPelanggan.setString(2, noHp);
-//            psPelanggan.setString(3, email);
-//            psPelanggan.executeUpdate();
-//
-//            // Ambil ID pelanggan yang baru (Auto Increment)
-//            java.sql.ResultSet rs = psPelanggan.getGeneratedKeys();
-//            int idPelanggan = 0;
-//            if (rs.next()) {
-//                idPelanggan = rs.getInt(1);
-//            }
-//
-//            // 2. Update status kamar menjadi 2 (Terisi/Dibeli)
-//            // Kita ambil semua no_kamar yang ada di tblRincian
-//            String queryUpdateKamar = "UPDATE kamar SET status = 2 WHERE no_kamar = ?";
-//            java.sql.PreparedStatement psUpdateKamar = K.prepareStatement(queryUpdateKamar);
-//
-//            for (int i = 0; i < tblRincian.getRowCount(); i++) {
-//                String noKamar = tblRincian.getValueAt(i, 0).toString(); // Kolom 0 adalah No Kamar
-//                psUpdateKamar.setString(1, noKamar);
-//                psUpdateKamar.addBatch(); // Gunakan batch agar lebih cepat
-//            }
-//            psUpdateKamar.executeBatch();
-//
-//            // Commit transaksi
-//            K.commit();
-//
-//            JOptionPane.showMessageDialog(this, "Pembayaran Berhasil!\nID Pelanggan: " + idPelanggan);
-//
-//            // Reset Form dan Refresh Tabel Katalog
-//            resetForm();
-//            refreshDataKamar(""); // Panggil ini agar kamar yang statusnya 2 hilang dari katalog
-//
-//        } catch (Exception e) {
-//            try {
-//                Connection K = Koneksi.Go();
-//                K.rollback(); // Batalkan jika ada error di tengah jalan
-//            } catch (java.sql.SQLException ex) {
-//                System.err.println(ex.getMessage());
-//            }
-//            JOptionPane.showMessageDialog(this, "Gagal memproses pembayaran: " + e.getMessage());
-//        }
-//    }
     private void bayarKamar() {
         String nama = txtNama.getText();
         String noHp = txtNoHp.getText();
@@ -762,7 +650,6 @@ public class BeliKamar extends javax.swing.JPanel {
             Connection K = Koneksi.Go();
             K.setAutoCommit(false);
 
-            // 1. Simpan/Ambil Pelanggan
             String queryPelanggan = "INSERT INTO pelanggan (nama, no_hp, email) VALUES (?, ?, ?)";
             java.sql.PreparedStatement psP = K.prepareStatement(queryPelanggan, Statement.RETURN_GENERATED_KEYS);
             psP.setString(1, nama);
@@ -772,19 +659,17 @@ public class BeliKamar extends javax.swing.JPanel {
             ResultSet rsP = psP.getGeneratedKeys();
             int idPelanggan = rsP.next() ? rsP.getInt(1) : 0;
 
-            // 2. Simpan ke Tabel Pembayaran (Sesuai Gambar 1)
             String queryBayar = "INSERT INTO pembayaran (total_harga, metode_pembayaran, id_pegawai, id_pelanggan) VALUES (?, ?, ?, ?)";
             java.sql.PreparedStatement psB = K.prepareStatement(queryBayar, Statement.RETURN_GENERATED_KEYS);
             psB.setDouble(1, Double.parseDouble(totalStr));
             psB.setString(2, metode);
-            psB.setInt(3, this.Pg.getId()); // Mengambil ID dari pegawai yang login
+            psB.setInt(3, this.Pg.getId()); 
             psB.setInt(4, idPelanggan);
             psB.executeUpdate();
 
             ResultSet rsB = psB.getGeneratedKeys();
             int idPembayaran = rsB.next() ? rsB.getInt(1) : 0;
 
-            // 3. Simpan ke Detail & Update Status Kamar (Sesuai Gambar 2)
             String queryDetail = "INSERT INTO detail_pembayaran (jumlah_pembayaran, harga, subtotal, id_pembayaran, id_kamar) VALUES (?, ?, ?, ?, ?)";
             java.sql.PreparedStatement psD = K.prepareStatement(queryDetail);
 
@@ -798,7 +683,6 @@ public class BeliKamar extends javax.swing.JPanel {
                 int qty = Integer.parseInt(modelK.getValueAt(i, 3).toString());
                 double subtotal = Double.parseDouble(modelK.getValueAt(i, 4).toString());
 
-                // Insert Detail
                 psD.setInt(1, qty);
                 psD.setDouble(2, harga);
                 psD.setDouble(3, subtotal);
@@ -806,7 +690,6 @@ public class BeliKamar extends javax.swing.JPanel {
                 psD.setInt(5, idKamar);
                 psD.addBatch();
 
-                // Update Status
                 psU.setInt(1, idKamar);
                 psU.addBatch();
             }
@@ -815,14 +698,10 @@ public class BeliKamar extends javax.swing.JPanel {
 
             K.commit();
 
-            // 4. Tampilkan Nota
-//            tampilkanNota(idPembayaran);
-
             resetForm();
             refreshDataKamar("");
 
         } catch (Exception e) {
-            // Logika rollback...
             JOptionPane.showMessageDialog(this, "Transaksi Gagal: " + e.getMessage());
         }
     }

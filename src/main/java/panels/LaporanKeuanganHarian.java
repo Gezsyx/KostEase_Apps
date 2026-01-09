@@ -26,7 +26,7 @@ public class LaporanKeuanganHarian extends javax.swing.JPanel {
         initComponents();
         this.currentIdPegawai = idPegawai;
         java.time.LocalDate hariIni = java.time.LocalDate.now();
-        txtHari.setText(hariIni.toString()); // Format: YYYY-MM-DD
+        txtHari.setText(hariIni.toString());
 
         loadLaporanHariIni(idPegawai, hariIni.toString());
     }
