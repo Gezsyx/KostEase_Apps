@@ -4,21 +4,29 @@
  */
 package kostease;
 
+import dialogs.Profil;
+import java.awt.BorderLayout;
 import java.awt.Frame;
+import javax.swing.JPanel;
+import panels.BerandaOwner;
+import util.Pegawai;
 
 /**
  *
  * @author ASUS
  */
 public class DashboardOwner extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardOwner.class.getName());
+
+    Pegawai Own;
 
     /**
      * Creates new form DashboardOwner
      */
     public DashboardOwner() {
         initComponents();
+        tampilkanBeranda();
     }
 
     /**
@@ -40,10 +48,14 @@ public class DashboardOwner extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         form = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         background.setMinimumSize(new java.awt.Dimension(1920, 1080));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -106,7 +118,7 @@ public class DashboardOwner extends javax.swing.JFrame {
         sidebar.setPreferredSize(new java.awt.Dimension(1920, 770));
 
         btnProduk.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        btnProduk.setText("Pembelian Produk");
+        btnProduk.setText("Beranda");
         btnProduk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProdukActionPerformed(evt);
@@ -157,11 +169,6 @@ public class DashboardOwner extends javax.swing.JFrame {
 
         form.setBackground(new java.awt.Color(255, 255, 255));
         form.setLayout(new java.awt.BorderLayout());
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg_daashboard2.png"))); // NOI18N
-        jLabel3.setPreferredSize(new java.awt.Dimension(1610, 805));
-        form.add(jLabel3, java.awt.BorderLayout.PAGE_START);
-
         background.add(form, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 113, 1610, 805));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new.png"))); // NOI18N
@@ -175,7 +182,9 @@ public class DashboardOwner extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       // TODO add your handling code here:
+        Profil Pf = new Profil(null, true, this.Own);
+        Pf.setVisible(true); 
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -186,7 +195,7 @@ public class DashboardOwner extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btnProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdukActionPerformed
-
+        tampilkanBeranda();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnProdukActionPerformed
 
@@ -198,6 +207,11 @@ public class DashboardOwner extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        jLabel2.setText(Own.getUsername());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -234,8 +248,23 @@ public class DashboardOwner extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel sidebar;
     // End of variables declaration//GEN-END:variables
+
+    private void tampilkanBeranda() {
+        BerandaOwner bo = new BerandaOwner();
+        bo.loadData(); // Memanggil fungsi hitung database yang kita buat tadi
+        AddViews(bo);
+    }
+
+    private void AddViews(JPanel Dt) {
+        if (form.getComponentCount() > 0) {
+            form.removeAll();
+        }
+        form.add(Dt, BorderLayout.CENTER);
+        form.revalidate();
+        form.repaint();
+    }
+
 }

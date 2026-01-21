@@ -145,7 +145,7 @@ public class LaporanKeuanganHarian extends javax.swing.JPanel {
                 + "JOIN pembayaran p ON dp.id_pembayaran = p.id_pembayaran "
                 + "WHERE p.id_pegawai = ? AND DATE(p.tanggal) = ?";
 
-        try (Connection conn = Koneksi.Go(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Koneksi.Colok(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, idPegawai);
             ps.setString(2, tanggal);

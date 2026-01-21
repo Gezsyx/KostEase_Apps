@@ -284,7 +284,7 @@ public class AddNewUser extends javax.swing.JDialog {
             String password = new String(txtPassword.getPassword());
             String foto_profil = txtUrl.getText();
 
-            Connection K = Koneksi.Go();
+            Connection K = Koneksi.Colok();
             String sql = "INSERT INTO pegawai "
                     + "(username,nama,jabatan,email,password,foto_profil) "
                     + "VALUES "

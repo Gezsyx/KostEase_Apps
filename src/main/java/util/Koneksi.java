@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Koneksi {
 
-    public static Connection Go() {
+    public static Connection Colok() {
         try {
             MysqlDataSource MDS = new MysqlDataSource();
             MDS.setServerName("localhost");

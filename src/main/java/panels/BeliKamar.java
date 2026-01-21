@@ -463,9 +463,9 @@ public class BeliKamar extends javax.swing.JPanel {
             DefaultTableModel model = (DefaultTableModel) tableKeranjang.getModel();
 
             model.addRow(new Object[]{
-                idKamar, 
-                noKamar, 
-                (long) harga, 
+                idKamar,
+                noKamar,
+                (long) harga,
                 jumlahHari,
                 (long) total
             });
@@ -504,8 +504,8 @@ public class BeliKamar extends javax.swing.JPanel {
         modelRincian.setRowCount(0);
 
         for (int i = 0; i < modelKeranjang.getRowCount(); i++) {
-            Object item = modelKeranjang.getValueAt(i, 1); 
-            Object subtotal = modelKeranjang.getValueAt(i, 4); 
+            Object item = modelKeranjang.getValueAt(i, 1);
+            Object subtotal = modelKeranjang.getValueAt(i, 4);
             modelRincian.addRow(new Object[]{item, subtotal});
         }
 
@@ -568,7 +568,7 @@ public class BeliKamar extends javax.swing.JPanel {
                 model.removeRow(i);
             }
 
-            Connection K = Koneksi.Go();
+            Connection K = Koneksi.Colok();
             String Q = "SELECT * FROM kamar WHERE status = 1" + w;
             Statement S = K.createStatement();
             ResultSet R = S.executeQuery(Q);
@@ -647,7 +647,7 @@ public class BeliKamar extends javax.swing.JPanel {
         }
 
         try {
-            Connection K = Koneksi.Go();
+            Connection K = Koneksi.Colok();
             K.setAutoCommit(false);
 
             String queryPelanggan = "INSERT INTO pelanggan (nama, no_hp, email) VALUES (?, ?, ?)";
@@ -663,7 +663,7 @@ public class BeliKamar extends javax.swing.JPanel {
             java.sql.PreparedStatement psB = K.prepareStatement(queryBayar, Statement.RETURN_GENERATED_KEYS);
             psB.setDouble(1, Double.parseDouble(totalStr));
             psB.setString(2, metode);
-            psB.setInt(3, this.Pg.getId()); 
+            psB.setInt(3, this.Pg.getId());
             psB.setInt(4, idPelanggan);
             psB.executeUpdate();
 
@@ -698,6 +698,25 @@ public class BeliKamar extends javax.swing.JPanel {
 
             K.commit();
 
+            java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
+            java.awt.Frame parentFrame = (parentWindow instanceof java.awt.Frame) ? (java.awt.Frame) parentWindow : null;
+
+            String tglSekarang = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new java.util.Date());
+            String namaKasir = this.Pg.getNama();
+
+            dialogs.NotaPembayaran nota = new dialogs.NotaPembayaran(parentFrame, true);
+            nota.setData(
+                    String.valueOf(idPembayaran), 
+                    tglSekarang,
+                    namaKasir,
+                    nama,
+                    totalStr,
+                    metode
+            );
+            nota.setLocationRelativeTo(null);
+            nota.setVisible(true);
+            
+            
             resetForm();
             refreshDataKamar("");
 

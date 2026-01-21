@@ -117,7 +117,7 @@ public class DeleteDataKamar extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            Connection K = Koneksi.Go();
+            Connection K = Koneksi.Colok();
             String sql = "DELETE FROM kamar WHERE "
                     + "id_kamar=?";
             PreparedStatement PS = K.prepareStatement(sql);

@@ -306,7 +306,7 @@ public class ManageKamar extends javax.swing.JPanel {
                 model.removeRow(i);
             }
 
-            Connection K = Koneksi.Go();
+            Connection K = Koneksi.Colok();
             String Q = "SELECT * FROM kamar" + w;
             Statement S = K.createStatement();
             ResultSet R = S.executeQuery(Q);

@@ -124,7 +124,7 @@ public class DeleteDataUsers extends javax.swing.JDialog {
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         try {
-            Connection K = Koneksi.Go();
+            Connection K = Koneksi.Colok();
             String sql = "DELETE FROM pegawai WHERE "
                     + "id_pegawai=?";
             PreparedStatement PS = K.prepareStatement(sql);

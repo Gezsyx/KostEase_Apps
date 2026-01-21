@@ -328,7 +328,7 @@ public class AddKamar extends javax.swing.JDialog {
             String gambar = txtGambar.getText().toString();
             String id_status = txtStatus.getSelectedItem().toString();
 
-            Connection K = Koneksi.Go();
+            Connection K = Koneksi.Colok();
             String sql = "INSERT INTO kamar "
                     + "(no_kamar,tipe_kamar, hpp, harga_harian, deskripsi, gambar,status) "
                     + "VALUES "

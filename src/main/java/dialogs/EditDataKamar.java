@@ -373,7 +373,7 @@ public class EditDataKamar extends javax.swing.JDialog {
                     + "status=? "
                     + "WHERE "
                     + "id_kamar=?";
-            Connection C = Koneksi.Go();
+            Connection C = Koneksi.Colok();
             PreparedStatement PS = C.prepareStatement(Q);
             PS.setString(1, no_kamar);
             PS.setString(2, tipe);

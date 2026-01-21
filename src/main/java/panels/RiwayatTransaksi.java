@@ -4,17 +4,32 @@
  */
 package panels;
 
+import dialogs.NotaPembayaran;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import util.Koneksi;
+import util.Pegawai;
+
 /**
  *
  * @author ASUS
  */
 public class RiwayatTransaksi extends javax.swing.JPanel {
 
+    private Pegawai Usr;
+
     /**
      * Creates new form RiwayatTransaksi
      */
-    public RiwayatTransaksi() {
+    public RiwayatTransaksi(Pegawai user) {
+        this.Usr = user;
         initComponents();
+        loadData(""); // Memuat semua data awal
+        cekJabatan();
     }
 
     /**
@@ -30,13 +45,13 @@ public class RiwayatTransaksi extends javax.swing.JPanel {
         header = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtFilter = new javax.swing.JComboBox<>();
-        jPanel2 = new javax.swing.JPanel();
-        txtSearch = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        cariKasir = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        btnDetailPembayaran = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelRiwayat = new javax.swing.JTable();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -49,38 +64,53 @@ public class RiwayatTransaksi extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Roboto", 3, 18)); // NOI18N
         jLabel1.setText("Riwayat Penjualan Kamar");
 
-        txtFilter.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txtFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Default", "Harga Tertinggi", "Harga Terendah", "" }));
+        txtFilter.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
+        txtFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Default", "Terbaru", "Terlama", "Tertinggi", "Terendah" }));
         txtFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFilterActionPerformed(evt);
             }
         });
 
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtSearch.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
-        txtSearch.setText("Search...");
-        txtSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txtSearch.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtSearchMouseClicked(evt);
-            }
-        });
-        txtSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearchActionPerformed(evt);
-            }
-        });
-        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtSearchKeyReleased(evt);
-            }
-        });
-        jPanel2.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 40));
-
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel5.setText("Urutkan :");
+
+        cariKasir.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
+        cariKasir.setText("Username atau ID Kasir....");
+        cariKasir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cariKasirMouseClicked(evt);
+            }
+        });
+        cariKasir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cariKasirKeyReleased(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel2.setText("Kasir      :");
+
+        btnDetailPembayaran.setBackground(new java.awt.Color(0, 204, 255));
+        btnDetailPembayaran.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnDetailPembayaran.setForeground(new java.awt.Color(255, 255, 255));
+        btnDetailPembayaran.setText("Detail");
+        btnDetailPembayaran.setEnabled(false);
+        btnDetailPembayaran.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDetailPembayaranActionPerformed(evt);
+            }
+        });
+
+        jButton1.setBackground(new java.awt.Color(255, 204, 0));
+        jButton1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Refresh");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
@@ -88,15 +118,23 @@ public class RiwayatTransaksi extends javax.swing.JPanel {
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(headerLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cariKasir, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                        .addGap(31, 31, 31)
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(1023, 1023, 1023)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 47, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnDetailPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(724, 724, 724))
+                    .addGroup(headerLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1132, 1132, 1132))))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,87 +143,180 @@ public class RiwayatTransaksi extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                    .addComponent(jLabel5)
+                    .addComponent(cariKasir, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDetailPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1620, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelRiwayat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "No Kamar", "Tipe Kamar", "Harga", "deskripsi"
+                "ID Pembayaran", "Waktu", "Total Pembayaran", "Metode Pembayaran", "Nama Kasir", "ID Pelanggan"
             }
         ));
-        jTable1.setRowHeight(40);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabelRiwayat.setRowHeight(40);
+        tabelRiwayat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                tabelRiwayatMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabelRiwayat);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 1620, 640));
-
-        jButton1.setBackground(new java.awt.Color(0, 255, 51));
-        jButton1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Masukan Keranjang");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1420, 760, 180, 30));
-
-        jButton2.setBackground(new java.awt.Color(102, 204, 255));
-        jButton2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Lihat Keranjang");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 760, 160, 30));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 1620, 710));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFilterActionPerformed
         // TODO add your handling code here:
-
+        urutData();
     }//GEN-LAST:event_txtFilterActionPerformed
 
-    private void txtSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSearchMouseClicked
+    private void tabelRiwayatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelRiwayatMouseClicked
+        int row = tabelRiwayat.getSelectedRow();
+        if (row != -1) {
+            btnDetailPembayaran.setEnabled(true);
+        }
+    }//GEN-LAST:event_tabelRiwayatMouseClicked
+
+    private void cariKasirKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cariKasirKeyReleased
+        cariKasir();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cariKasirKeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        txtFilter.setSelectedItem("Default");
+
+        if (Usr.getJabatan().equalsIgnoreCase("admin")) {
+            cariKasir.setText("Username atau ID Kasir....");
+        }
+
+        loadData("");
+
+        tabelRiwayat.clearSelection();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cariKasirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cariKasirMouseClicked
+        cariKasir.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cariKasirMouseClicked
+
+    private void btnDetailPembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailPembayaranActionPerformed
+        int row = tabelRiwayat.getSelectedRow();
+        if (row != -1) {
+            // Ambil data dari kolom tabelRiwayat
+            String id = tabelRiwayat.getValueAt(row, 0).toString();
+            String tgl = tabelRiwayat.getValueAt(row, 1).toString();
+            String total = tabelRiwayat.getValueAt(row, 2).toString();
+            String metode = tabelRiwayat.getValueAt(row, 3).toString();
+            String kasir = tabelRiwayat.getValueAt(row, 4).toString();
+            String pelanggan = tabelRiwayat.getValueAt(row, 5).toString();
+
+            // Panggil Dialog Nota
+            NotaPembayaran nota = new NotaPembayaran(new javax.swing.JFrame(), true);
+            nota.setData(id, tgl, kasir, pelanggan, total, metode);
+            nota.setLocationRelativeTo(this);
+            nota.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Silahkan pilih data terlebih dahulu!");
+        }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchMouseClicked
-
-    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchActionPerformed
-
-    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchKeyReleased
-
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_btnDetailPembayaranActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDetailPembayaran;
+    private javax.swing.JTextField cariKasir;
     private javax.swing.JPanel header;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private static javax.swing.JTable jTable1;
+    private static javax.swing.JTable tabelRiwayat;
     private javax.swing.JComboBox<String> txtFilter;
-    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
+
+    private void cekJabatan() {
+        if (Usr.getJabatan().equalsIgnoreCase("kasir")) {
+            cariKasir.setText(Usr.getUsername());
+            cariKasir.setEnabled(false);
+        }
+    }
+
+    public void loadData(String additionalQuery) {
+        DefaultTableModel model;
+        model = (DefaultTableModel) tabelRiwayat.getModel();
+        model.setRowCount(0);
+        try {
+            Connection conn = Koneksi.Colok();
+            // Base Query: Menggabungkan tabel pembayaran dan pegawai untuk mendapatkan nama kasir
+            String sql = "SELECT p.*, pg.username FROM pembayaran p "
+                    + "JOIN pegawai pg ON p.id_pegawai = pg.id_pegawai WHERE 1=1 ";
+
+            // Filter berdasarkan role
+            if (Usr.getJabatan().equalsIgnoreCase("kasir")) {
+                sql += " AND p.id_pegawai = '" + Usr.getId() + "' ";
+            }
+
+            // Tambahkan query tambahan (Search/Filter/Sort)
+            sql += additionalQuery;
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString("id_pembayaran"),
+                    rs.getString("tanggal"),
+                    rs.getDouble("total_harga"),
+                    rs.getString("metode_pembayaran"),
+                    rs.getString("username"), // Nama Kasir
+                    rs.getString("id_pelanggan")
+                });
+            }
+        } catch (SQLException e) {
+            System.out.println("Error Load Data: " + e.getMessage());
+        }
+    }
+
+    private void urutData() {
+        String order = "";
+        switch (txtFilter.getSelectedItem().toString()) {
+            case "Terbaru":
+                order = " ORDER BY tanggal DESC";
+                break;
+            case "Terlama":
+                order = " ORDER BY tanggal ASC";
+                break;
+            case "Tertinggi":
+                order = " ORDER BY total_harga DESC";
+                break;
+            case "Terendah":
+                order = " ORDER BY total_harga ASC";
+                break;
+            default:
+                order = " ORDER BY id_pembayaran DESC";
+                break;
+        }
+        loadData(order);
+    }
+
+    private void cariKasir() {
+        String cari = cariKasir.getText();
+        // Cari berdasarkan ID atau Username kasir
+        loadData(" AND (pg.username LIKE '%" + cari + "%' OR p.id_pegawai LIKE '%" + cari + "%')");
+    }
 }

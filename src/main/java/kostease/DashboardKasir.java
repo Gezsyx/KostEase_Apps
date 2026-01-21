@@ -216,7 +216,8 @@ public class DashboardKasir extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        AddViews(new RiwayatTransaksi());        // TODO add your handling code here:
+        AddViews(new RiwayatTransaksi(this.Usr));
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**

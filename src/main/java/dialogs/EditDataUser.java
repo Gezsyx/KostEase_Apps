@@ -309,7 +309,7 @@ public class EditDataUser extends javax.swing.JDialog {
                     + "foto_profil=? "
                     + "WHERE "
                     + "id_pegawai=?";
-            Connection C = Koneksi.Go();
+            Connection C = Koneksi.Colok();
             PreparedStatement PS = C.prepareStatement(Q);
             PS.setString(1, username);
             PS.setString(2, nama);

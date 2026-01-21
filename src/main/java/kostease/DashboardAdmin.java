@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import panels.ManageUsers;
 import dialogs.Profil;
 import panels.ManageKamar;
-import panels.ManageOkupansi;
+import panels.RiwayatTransaksi;
 
 /**
  *
@@ -47,7 +47,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         sidebar = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnRiwayatTransaksi = new javax.swing.JButton();
         form = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -134,11 +134,11 @@ public class DashboardAdmin extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jButton5.setText("Manage Okupansi");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnRiwayatTransaksi.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnRiwayatTransaksi.setText("Riwayat Transaksi");
+        btnRiwayatTransaksi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnRiwayatTransaksiActionPerformed(evt);
             }
         });
 
@@ -151,7 +151,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnRiwayatTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(79, 79, 79))
         );
         sidebarLayout.setVerticalGroup(
@@ -162,7 +162,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnRiwayatTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         bacground_panel.add(sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 113, 290, 805));
@@ -211,10 +211,10 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jLabel2.setText(Usr.getUsername());         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        AddViews(new ManageOkupansi());
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void btnRiwayatTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRiwayatTransaksiActionPerformed
+        // TODO add your handling code he
+        AddViews(new RiwayatTransaksi(this.Usr));
+    }//GEN-LAST:event_btnRiwayatTransaksiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -247,12 +247,12 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bacground_panel;
+    private javax.swing.JButton btnRiwayatTransaksi;
     private javax.swing.JPanel form;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

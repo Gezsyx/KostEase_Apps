@@ -179,7 +179,7 @@ public class Login extends javax.swing.JFrame {
         String usr = txtUsername.getText();
         String pwd = new String(txtPassword.getPassword());
         try {
-            Connection K = Koneksi.Go();
+            Connection K = Koneksi.Colok();
             Statement ST = K.createStatement();
             String Q = "SELECT * FROM pegawai "
                     + "WHERE "
@@ -211,8 +211,12 @@ public class Login extends javax.swing.JFrame {
                 DK.Usr = Us;
                 DK.setVisible(true);
                 DK.setExtendedState(Frame.MAXIMIZED_BOTH);
-            } else if (Us.getJabatan().equals("MANAJER")) {
-
+            } else if (Us.getJabatan().equals("OWNER")) {
+                this.setVisible(false);
+                DashboardOwner DO =new DashboardOwner();
+                DO.Own = Us;
+                DO.setVisible(true);
+                DO.setExtendedState(Frame.MAXIMIZED_BOTH);
             } 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Terjadi error:\n" + e.getMessage());

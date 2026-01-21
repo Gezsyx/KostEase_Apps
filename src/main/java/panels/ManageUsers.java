@@ -307,7 +307,7 @@ public class ManageUsers extends javax.swing.JPanel {
                 model.removeRow(i);
             }
 
-            Connection K = Koneksi.Go();
+            Connection K = Koneksi.Colok();
             String Q = "SELECT * FROM pegawai" + w;
             Statement S = K.createStatement();
             ResultSet R = S.executeQuery(Q);
