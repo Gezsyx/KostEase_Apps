@@ -26,12 +26,11 @@
             <artifactId>jcalendar</artifactId>
             <version>1.4</version>
         </dependency>
-        <!-- Source: https://mvnrepository.com/artifact/org.jfree/jfreechart -->
         <dependency>
-            <groupId>org.jfree</groupId>
+            <groupId>jfreechart</groupId>
             <artifactId>jfreechart</artifactId>
-            <version>1.5.6</version>
-            <scope>compile</scope>
+            <version>1.0.0</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
 </project>

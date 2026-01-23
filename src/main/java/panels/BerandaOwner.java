@@ -4,17 +4,11 @@
  */
 package panels;
 
-import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.NumberFormat;
 import java.util.Locale;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
 import util.Koneksi;
 
 /**
@@ -31,6 +25,8 @@ public class BerandaOwner extends javax.swing.JPanel {
         setFilterToCurrentDate();
         loadData();
     }
+
+    private boolean isUpdating = false;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -197,19 +193,19 @@ public class BerandaOwner extends javax.swing.JPanel {
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 490, 1400, 270));
 
-        jLabel6.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel6.setText("TAHUN   :");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 100, 89, 35));
 
-        jLabel7.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel7.setText("BULAN   :");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 96, 35));
 
-        jLabel8.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel8.setText("TANGGAL   :");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 110, 35));
 
-        filterTahun.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        filterTahun.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         filterTahun.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SEMUA", "2025", "2026" }));
         filterTahun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,7 +214,7 @@ public class BerandaOwner extends javax.swing.JPanel {
         });
         jPanel1.add(filterTahun, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, 110, 40));
 
-        filterTanggal.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        filterTanggal.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         filterTanggal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SEMUA", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
         filterTanggal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,7 +223,7 @@ public class BerandaOwner extends javax.swing.JPanel {
         });
         jPanel1.add(filterTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 110, 40));
 
-        filterBulan.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        filterBulan.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         filterBulan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SEMUA", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
         filterBulan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,19 +239,26 @@ public class BerandaOwner extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void filterBulanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterBulanActionPerformed
-        updateTanggalCombo();
-        loadData();
+        if (!isUpdating) {
+            updateTanggalCombo();
+            loadData();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_filterBulanActionPerformed
 
     private void filterTanggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterTanggalActionPerformed
-        loadData();
+        if (!isUpdating) {
+            updateTanggalCombo();
+            loadData();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_filterTanggalActionPerformed
 
     private void filterTahunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterTahunActionPerformed
+
         updateTanggalCombo();
         loadData();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_filterTahunActionPerformed
 
@@ -296,6 +299,7 @@ public class BerandaOwner extends javax.swing.JPanel {
     }
 
     private void updateTanggalCombo() {
+        isUpdating = true;
         String selectedBulan = filterBulan.getSelectedItem().toString();
         String selectedTahun = filterTahun.getSelectedItem().toString();
         Object currentTgl = filterTanggal.getSelectedItem();
@@ -317,63 +321,21 @@ public class BerandaOwner extends javax.swing.JPanel {
             filterTanggal.addItem(String.valueOf(i));
         }
 
-        // Kembalikan pilihan user sebelumnya jika masih tersedia
-        filterTanggal.setSelectedItem(currentTgl);
-    }
-    
-    
-    private void tampilkanBarChart() {
-    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-    try {
-        Connection conn = Koneksi.Colok();
-        String tgl = filterTanggal.getSelectedItem().toString();
-        String bln = filterBulan.getSelectedItem().toString();
-        String thn = filterTahun.getSelectedItem().toString();
-
-        // Gunakan filter yang sama dengan loadData()
-        String filterSQL = "";
-        if (!tgl.equals("SEMUA")) filterSQL += " AND DAY(p.tanggal) = " + tgl;
-        if (!bln.equals("SEMUA")) filterSQL += " AND MONTH(p.tanggal) = " + bln;
-        if (!thn.equals("SEMUA")) filterSQL += " AND YEAR(p.tanggal) = " + thn;
-
-        String sql = "SELECT k.tipe_kamar, COUNT(dp.id_kamar) as qty "
-                   + "FROM detail_pembayaran dp "
-                   + "JOIN kamar k ON dp.id_kamar = k.id_kamar "
-                   + "JOIN pembayaran p ON dp.id_pembayaran = p.id_pembayaran "
-                   + "WHERE 1=1" + filterSQL
-                   + " GROUP BY k.tipe_kamar";
-
-        Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery(sql);
-
-        while (rs.next()) {
-            dataset.addValue(rs.getInt("qty"), "Penjualan", rs.getString("tipe_kamar"));
+        if (currentTgl != null) {
+            filterTanggal.setSelectedItem(currentTgl);
         }
 
-        // Membuat Chart
-        JFreeChart barChart = ChartFactory.createBarChart(
-                "Statistik Penjualan Tipe Kamar", // Judul
-                "Tipe Kamar",                    // Label X
-                "Jumlah Terjual",                // Label Y
-                dataset, 
-                PlotOrientation.VERTICAL,
-                false, true, false);
+        isUpdating = false; // Buka kunci
 
-        // Memasukkan Chart ke dalam Panel
-        ChartPanel chartPanel = new ChartPanel(barChart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(panelChart.getWidth(), panelChart.getHeight()));
-        
-        panelChart.removeAll();
-        panelChart.add(chartPanel, BorderLayout.CENTER);
-        panelChart.validate();
-
-    } catch (Exception e) {
-        e.printStackTrace();
+        // Kembalikan pilihan user sebelumnya jika masih tersedia
     }
-}
 
     public void loadData() {
+        if (filterTanggal.getSelectedItem() == null
+                || filterBulan.getSelectedItem() == null
+                || filterTahun.getSelectedItem() == null) {
+            return; // Keluar dari method jika masih proses loading/kosong
+        }
         try {
             Connection conn = Koneksi.Colok();
             String tgl = filterTanggal.getSelectedItem().toString();
@@ -431,10 +393,7 @@ public class BerandaOwner extends javax.swing.JPanel {
             double profit = rs3.next() ? rs3.getDouble("profit") : 0;
             NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
             jLabel5.setText(nf.format(profit));
-            
-            tampilkanBarChart();
 
-            
         } catch (Exception e) {
             e.printStackTrace();
         }

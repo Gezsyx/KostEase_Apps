@@ -9,6 +9,8 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 import javax.swing.JPanel;
 import panels.BerandaOwner;
+import panels.GrafikPenjualan;
+import panels.KinerjaKasir;
 import util.Pegawai;
 
 /**
@@ -45,7 +47,7 @@ public class DashboardOwner extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         sidebar = new javax.swing.JPanel();
         btnProduk = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        grafik = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         form = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -125,16 +127,16 @@ public class DashboardOwner extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jButton2.setText("Laporan Keuangan");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        grafik.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        grafik.setText("Grafik Analitik");
+        grafik.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                grafikActionPerformed(evt);
             }
         });
 
         jButton5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jButton5.setText("Riwayat Pembelian");
+        jButton5.setText("Kinerja Kasir");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -149,7 +151,7 @@ public class DashboardOwner extends javax.swing.JFrame {
                 .addGap(71, 71, 71)
                 .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnProduk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(grafik, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(79, 79, 79))
         );
@@ -159,7 +161,7 @@ public class DashboardOwner extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addComponent(btnProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(grafik, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(611, 611, 611))
@@ -183,7 +185,7 @@ public class DashboardOwner extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Profil Pf = new Profil(null, true, this.Own);
-        Pf.setVisible(true); 
+        Pf.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -199,12 +201,18 @@ public class DashboardOwner extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnProdukActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void grafikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grafikActionPerformed
+        try {
+            AddViews(new GrafikPenjualan());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_grafikActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        AddViews(new KinerjaKasir());
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -242,7 +250,7 @@ public class DashboardOwner extends javax.swing.JFrame {
     private javax.swing.JPanel background;
     private javax.swing.JButton btnProduk;
     private javax.swing.JPanel form;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton grafik;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

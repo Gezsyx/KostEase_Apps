@@ -49,8 +49,7 @@ public class ManageKamar extends javax.swing.JPanel {
         txtAdd = new javax.swing.JButton();
         txtDelete = new javax.swing.JButton();
         txtRefresh = new javax.swing.JButton();
-        contain = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -169,12 +168,6 @@ public class ManageKamar extends javax.swing.JPanel {
 
         utama.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        contain.setBackground(new java.awt.Color(204, 0, 204));
-        contain.setPreferredSize(new java.awt.Dimension(1610, 705));
-
-        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
-
-        jTable1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -186,27 +179,15 @@ public class ManageKamar extends javax.swing.JPanel {
                 "id_kamar", "no_kamar", "tipe_kamar", "hpp", "harga_harian", "deskripsi", "link_gambar", "id_status"
             }
         ));
-        jTable1.setPreferredSize(new java.awt.Dimension(1610, 670));
         jTable1.setRowHeight(40);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTable1);
 
-        javax.swing.GroupLayout containLayout = new javax.swing.GroupLayout(contain);
-        contain.setLayout(containLayout);
-        containLayout.setHorizontalGroup(
-            containLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1610, Short.MAX_VALUE)
-        );
-        containLayout.setVerticalGroup(
-            containLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
-        );
-
-        utama.add(contain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, -1, -1));
+        utama.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 1610, 680));
 
         add(utama, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -225,35 +206,6 @@ public class ManageKamar extends javax.swing.JPanel {
         txtSearch.setText("Search...");
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRefreshActionPerformed
-
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int n = jTable1.getSelectedRow();
-        if (n != -1) {
-            txtEdit.setEnabled(true);
-            txtDelete.setEnabled(true);
-            Dk = new Kamar();
-            String IDkmr = jTable1.getValueAt(n, 0).toString();
-            int ID = Integer.valueOf(IDkmr);
-            String no_kamar = jTable1.getValueAt(n, 1).toString();
-            String tipe_kamar = jTable1.getValueAt(n, 2).toString();
-            String hpp_kamar = jTable1.getValueAt(n,3).toString();
-            String harga_harian = jTable1.getValueAt(n, 4).toString();
-            String deskripsi = jTable1.getValueAt(n, 5).toString();
-            String gambar = jTable1.getValueAt(n, 6).toString();
-            String status = jTable1.getValueAt(n, 7).toString();
-            int status_kmr = Integer.valueOf(status);
-            Dk.setId(ID);
-            Dk.setNoKamar(no_kamar);
-            Dk.setTipe(tipe_kamar);
-            Dk.setHpp(hpp_kamar);
-            Dk.setHargaHarian(harga_harian);
-            Dk.setDeskripsi(deskripsi);
-            Dk.setGambar(gambar);
-            Dk.setStatus(status_kmr);
-
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1MouseClicked
 
     private void txtEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEditActionPerformed
         if (jTable1.getSelectedRow() != -1) {
@@ -283,13 +235,40 @@ public class ManageKamar extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchKeyReleased
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int n = jTable1.getSelectedRow();
+        if (n != -1) {
+            txtEdit.setEnabled(true);
+            txtDelete.setEnabled(true);
+            Dk = new Kamar();
+            String IDusr = jTable1.getValueAt(n, 0).toString();
+            int ID = Integer.valueOf(IDusr);
+            String no = jTable1.getValueAt(n, 1).toString();
+            String tipe = jTable1.getValueAt(n, 2).toString();
+            String hpp = jTable1.getValueAt(n, 3).toString();
+            String harga = jTable1.getValueAt(n, 4).toString();
+            String deskripsi = jTable1.getValueAt(n, 5).toString();
+            String link = jTable1.getValueAt(n, 6).toString();
+            String IDstatus = jTable1.getValueAt(n, 7).toString();
+            int status = Integer.valueOf(IDstatus);
+            Dk.setId(ID);
+            Dk.setNoKamar(no);
+            Dk.setTipe(tipe);
+            Dk.setHpp(hpp);
+            Dk.setHargaHarian(harga);
+            Dk.setDeskripsi(deskripsi);
+            Dk.setGambar(link);
+            Dk.setStatus(status);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel contain;
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     private static javax.swing.JTable jTable1;
     private javax.swing.JButton txtAdd;
     private javax.swing.JButton txtDelete;
