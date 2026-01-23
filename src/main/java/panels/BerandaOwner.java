@@ -288,10 +288,10 @@ public class BerandaOwner extends javax.swing.JPanel {
     private void setFilterToCurrentDate() {
         java.util.Calendar cal = java.util.Calendar.getInstance();
         int tgl = cal.get(java.util.Calendar.DAY_OF_MONTH);
-        int bln = cal.get(java.util.Calendar.MONTH) + 1; // Calendar dimulai dari 0
+        int bln = cal.get(java.util.Calendar.MONTH) + 1; 
         int thn = cal.get(java.util.Calendar.YEAR);
 
-        updateTanggalCombo(); // Pastikan jumlah hari benar dulu
+        updateTanggalCombo(); 
 
         filterTanggal.setSelectedItem(String.valueOf(tgl));
         filterBulan.setSelectedItem(String.valueOf(bln));
@@ -304,7 +304,7 @@ public class BerandaOwner extends javax.swing.JPanel {
         String selectedTahun = filterTahun.getSelectedItem().toString();
         Object currentTgl = filterTanggal.getSelectedItem();
 
-        // Jika pilih "SEMUA", kita tidak perlu mengubah jumlah hari (default 31)
+       
         if (selectedBulan.equals("SEMUA") || selectedTahun.equals("SEMUA")) {
             return;
         }
@@ -325,16 +325,14 @@ public class BerandaOwner extends javax.swing.JPanel {
             filterTanggal.setSelectedItem(currentTgl);
         }
 
-        isUpdating = false; // Buka kunci
-
-        // Kembalikan pilihan user sebelumnya jika masih tersedia
+        isUpdating = false; 
     }
 
     public void loadData() {
         if (filterTanggal.getSelectedItem() == null
                 || filterBulan.getSelectedItem() == null
                 || filterTahun.getSelectedItem() == null) {
-            return; // Keluar dari method jika masih proses loading/kosong
+            return; 
         }
         try {
             Connection conn = Koneksi.Colok();
@@ -342,7 +340,7 @@ public class BerandaOwner extends javax.swing.JPanel {
             String bln = filterBulan.getSelectedItem().toString();
             String thn = filterTahun.getSelectedItem().toString();
 
-            // Buat String Filter SQL
+     
             String filterSQL = "";
             if (!tgl.equals("SEMUA")) {
                 filterSQL += " AND DAY(p.tanggal) = " + tgl;
@@ -354,31 +352,28 @@ public class BerandaOwner extends javax.swing.JPanel {
                 filterSQL += " AND YEAR(p.tanggal) = " + thn;
             }
 
-            // 1. Jumlah Kamar Terjual (Gunakan COUNT atau SUM qty jika ada kolomnya)
+         
             String sqlTerjual = "SELECT COUNT(dp.id_kamar) as total FROM detail_pembayaran dp "
                     + "JOIN pembayaran p ON dp.id_pembayaran = p.id_pembayaran WHERE 1=1" + filterSQL;
 
-            // 2. Tipe Kamar Terlaris
+        
             String sqlTerlaris = "SELECT k.tipe_kamar, COUNT(dp.id_kamar) as qty FROM detail_pembayaran dp "
                     + "JOIN kamar k ON dp.id_kamar = k.id_kamar "
                     + "JOIN pembayaran p ON dp.id_pembayaran = p.id_pembayaran "
                     + "WHERE 1=1" + filterSQL
                     + " GROUP BY k.tipe_kamar ORDER BY qty DESC LIMIT 1";
 
-            // 3. Total Pendapatan
             String sqlProfit = "SELECT SUM((dp.harga - k.hpp) * dp.jumlah_pembayaran) as profit FROM detail_pembayaran dp "
                     + "JOIN kamar k ON dp.id_kamar = k.id_kamar "
                     + "JOIN pembayaran p ON dp.id_pembayaran = p.id_pembayaran "
                     + "WHERE 1=1" + filterSQL.replace("p.tanggal", "p.tanggal");
-            // Catatan: sesuaikan alias tabel jika query profit berbeda
+  
 
             Statement st = conn.createStatement();
 
-            // Eksekusi Terjual
             ResultSet rs1 = st.executeQuery(sqlTerjual);
             jumlahProdukTerjual.setText(rs1.next() ? String.valueOf(rs1.getInt("total")) : "0");
 
-            // Eksekusi Terlaris
             ResultSet rs2 = st.executeQuery(sqlTerlaris);
             if (rs2.next()) {
                 tipeTerlaris.setText(rs2.getString("tipe_kamar"));
@@ -388,7 +383,6 @@ public class BerandaOwner extends javax.swing.JPanel {
                 totalTerjualTipeKamar.setText("Total Terjual: 0");
             }
 
-            // Eksekusi Pendapatan
             ResultSet rs3 = st.executeQuery(sqlProfit);
             double profit = rs3.next() ? rs3.getDouble("profit") : 0;
             NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));

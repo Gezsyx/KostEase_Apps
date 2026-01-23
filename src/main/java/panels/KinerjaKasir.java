@@ -182,10 +182,10 @@ public class KinerjaKasir extends javax.swing.JPanel {
     private void setFilterToCurrentDate() {
         java.util.Calendar cal = java.util.Calendar.getInstance();
         int tgl = cal.get(java.util.Calendar.DAY_OF_MONTH);
-        int bln = cal.get(java.util.Calendar.MONTH) + 1; // Calendar dimulai dari 0
+        int bln = cal.get(java.util.Calendar.MONTH) + 1; 
         int thn = cal.get(java.util.Calendar.YEAR);
 
-        updateTanggalCombo(); // Pastikan jumlah hari benar dulu
+        updateTanggalCombo(); 
 
         filterTanggal.setSelectedItem(String.valueOf(tgl));
         filterBulan.setSelectedItem(String.valueOf(bln));
@@ -198,7 +198,7 @@ public class KinerjaKasir extends javax.swing.JPanel {
         String selectedTahun = filterTahun.getSelectedItem().toString();
         Object currentTgl = filterTanggal.getSelectedItem();
 
-        // Jika pilih "SEMUA", kita tidak perlu mengubah jumlah hari (default 31)
+       
         if (selectedBulan.equals("SEMUA") || selectedTahun.equals("SEMUA")) {
             return;
         }
@@ -219,25 +219,20 @@ public class KinerjaKasir extends javax.swing.JPanel {
             filterTanggal.setSelectedItem(currentTgl);
         }
 
-        isUpdating = false; // Buka kunci
-
-        // Kembalikan pilihan user sebelumnya jika masih tersedia
+        isUpdating = false; 
     }
 
     private void loadData() {
     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    model.setRowCount(0); // Bersihkan tabel sebelum memuat data baru
+    model.setRowCount(0); 
 
     try {
-        java.sql.Connection conn = Koneksi.Colok(); // Sesuaikan dengan nama class koneksi Anda
+        java.sql.Connection conn = Koneksi.Colok(); 
         
-        // Ambil nilai dari filter
         String tgl = filterTanggal.getSelectedItem().toString();
         String bln = filterBulan.getSelectedItem().toString();
         String thn = filterTahun.getSelectedItem().toString();
 
-        // Query dasar: Join pegawai (sebagai kasir) dengan pembayaran
-        // Kita hitung COUNT untuk jumlah transaksi dan SUM untuk pendapatan
         String sql = "SELECT p.nama AS nama_kasir, "
                    + "COUNT(b.id_pembayaran) AS jumlah_transaksi, "
                    + "SUM(b.total_harga) AS total_pendapatan "
@@ -245,7 +240,6 @@ public class KinerjaKasir extends javax.swing.JPanel {
                    + "LEFT JOIN pembayaran b ON p.id_pegawai = b.id_pegawai "
                    + "WHERE p.jabatan = 'KASIR' ";
 
-        // Tambahkan filter dinamis berdasarkan pilihan JComboBox
         if (!tgl.equals("SEMUA")) {
             sql += " AND DAY(b.tanggal) = " + tgl;
         }

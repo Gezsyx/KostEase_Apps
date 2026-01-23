@@ -262,7 +262,7 @@ public class DashboardOwner extends javax.swing.JFrame {
 
     private void tampilkanBeranda() {
         BerandaOwner bo = new BerandaOwner();
-        bo.loadData(); // Memanggil fungsi hitung database yang kita buat tadi
+        bo.loadData(); 
         AddViews(bo);
     }
 

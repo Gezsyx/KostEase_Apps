@@ -193,10 +193,10 @@ public class GrafikPenjualan extends javax.swing.JPanel {
     private void setFilterToCurrentDate() {
         java.util.Calendar cal = java.util.Calendar.getInstance();
         int tgl = cal.get(java.util.Calendar.DAY_OF_MONTH);
-        int bln = cal.get(java.util.Calendar.MONTH) + 1; // Calendar dimulai dari 0
+        int bln = cal.get(java.util.Calendar.MONTH) + 1; 
         int thn = cal.get(java.util.Calendar.YEAR);
 
-        updateTanggalCombo(); // Pastikan jumlah hari benar dulu
+        updateTanggalCombo();
 
         filterTanggal.setSelectedItem(String.valueOf(tgl));
         filterBulan.setSelectedItem(String.valueOf(bln));
@@ -217,7 +217,7 @@ public class GrafikPenjualan extends javax.swing.JPanel {
         Object currentTgl = filterTanggal.getSelectedItem();
 
         if (selectedBulan.equals("SEMUA") || selectedTahun.equals("SEMUA")) {
-            // Jika pilih SEMUA, kita set manual ke 31 hari atau biarkan saja
+         
             return;
         }
 
@@ -227,7 +227,6 @@ public class GrafikPenjualan extends javax.swing.JPanel {
         java.util.Calendar cal = new java.util.GregorianCalendar(tahun, bulan - 1, 1);
         int daysInMonth = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
 
-        // Nonaktifkan sementara listener agar tidak memicu updateGrafik saat menghapus item
         filterTanggal.removeActionListener(filterTanggal.getActionListeners()[0]);
 
         filterTanggal.removeAllItems();
@@ -236,10 +235,8 @@ public class GrafikPenjualan extends javax.swing.JPanel {
             filterTanggal.addItem(String.valueOf(i));
         }
 
-        // Kembalikan pilihan user
         filterTanggal.setSelectedItem(currentTgl);
 
-        // Aktifkan kembali listener-nya (Sesuaikan dengan nama method listener Anda)
         filterTanggal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 filterTanggalActionPerformed(evt);
@@ -248,7 +245,6 @@ public class GrafikPenjualan extends javax.swing.JPanel {
 
     }
 
-    // Kelas internal untuk menggambar grafik secara manual
     class CanvasGrafik extends javax.swing.JPanel {
 
         private String[] labels;
@@ -259,7 +255,7 @@ public class GrafikPenjualan extends javax.swing.JPanel {
             this.labels = labels;
             this.values = values;
             this.judul = judul;
-            repaint(); // Gambar ulang saat data berubah
+            repaint(); 
         }
 
         @Override
@@ -276,7 +272,6 @@ public class GrafikPenjualan extends javax.swing.JPanel {
             int width = getWidth() - (2 * padding);
             int height = getHeight() - (2 * padding);
 
-            // Cari nilai maksimal untuk skala
             int maxVal = 0;
             for (int v : values) {
                 if (v > maxVal) {
@@ -287,33 +282,28 @@ public class GrafikPenjualan extends javax.swing.JPanel {
                 maxVal = 1;
             }
 
-            // Gambar Judul
             g2.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
             g2.drawString(judul, padding, padding / 2);
 
-            // Koordinat Sumbu
-            g2.drawLine(padding, height + padding, width + padding, height + padding); // Sumbu X
-            g2.drawLine(padding, padding, padding, height + padding); // Sumbu Y
+            g2.drawLine(padding, height + padding, width + padding, height + padding); 
+            g2.drawLine(padding, padding, padding, height + padding); 
 
             int barWidth = width / labels.length - 20;
 
             for (int i = 0; i < labels.length; i++) {
-                // Hitung tinggi batang
+   
                 int barHeight = (int) ((double) values[i] / maxVal * height);
                 int x = padding + (i * (width / labels.length)) + 10;
                 int y = height + padding - barHeight;
 
-                // Gambar Batang
                 g2.setColor(new java.awt.Color(52, 152, 219));
                 g2.fillRect(x, y, barWidth, barHeight);
                 g2.setColor(java.awt.Color.BLACK);
                 g2.drawRect(x, y, barWidth, barHeight);
 
-                // Label Nama (Rotasi jika perlu, di sini horizontal saja)
                 g2.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 10));
                 g2.drawString(labels[i], x, height + padding + 15);
 
-                // Label Nilai di atas batang
                 g2.drawString(String.valueOf(values[i]), x + (barWidth / 4), y - 5);
             }
         }
@@ -325,7 +315,6 @@ public class GrafikPenjualan extends javax.swing.JPanel {
         String bln = (String) filterBulan.getSelectedItem();
         String thn = (String) filterTahun.getSelectedItem();
 
-        // Bangun Query Filter Waktu
         String whereClause = " WHERE 1=1 ";
         if (!tgl.equals("SEMUA")) {
             whereClause += " AND DAY(p.tanggal) = " + tgl;
@@ -364,8 +353,6 @@ public class GrafikPenjualan extends javax.swing.JPanel {
                 labels.add(rs.getString("label"));
                 values.add(rs.getInt("jumlah"));
             }
-
-            // Update Panel Grafik
             canvas.setData(labels.toArray(new String[0]),
                     values.stream().mapToInt(i -> i).toArray(),
                     judulGrafik);
