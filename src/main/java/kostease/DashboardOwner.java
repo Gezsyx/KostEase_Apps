@@ -9,7 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 import javax.swing.JPanel;
 import panels.BerandaOwner;
-import panels.GrafikPenjualan;
+import panels.GrafikAnalitik;
 import panels.KinerjaKasir;
 import util.Pegawai;
 
@@ -203,7 +203,7 @@ public class DashboardOwner extends javax.swing.JFrame {
 
     private void grafikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grafikActionPerformed
         try {
-            AddViews(new GrafikPenjualan());
+            AddViews(new GrafikAnalitik());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

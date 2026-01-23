@@ -19,7 +19,7 @@ import util.Pegawai;
  * @author ASUS
  */
 public class RiwayatTransaksi extends javax.swing.JPanel {
-
+    
     private Pegawai Usr;
 
     /**
@@ -196,13 +196,13 @@ public class RiwayatTransaksi extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         txtFilter.setSelectedItem("Default");
-
+        btnDetailPembayaran.setEnabled(false);
         if (Usr.getJabatan().equalsIgnoreCase("admin")) {
             cariKasir.setText("Username atau ID Kasir....");
         }
-
+        
         loadData("");
-
+        
         tabelRiwayat.clearSelection();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -255,7 +255,7 @@ public class RiwayatTransaksi extends javax.swing.JPanel {
             cariKasir.setEnabled(false);
         }
     }
-
+    
     public void loadData(String additionalQuery) {
         DefaultTableModel model;
         model = (DefaultTableModel) tabelRiwayat.getModel();
@@ -273,10 +273,10 @@ public class RiwayatTransaksi extends javax.swing.JPanel {
 
             // Tambahkan query tambahan (Search/Filter/Sort)
             sql += additionalQuery;
-
+            
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-
+            
             while (rs.next()) {
                 model.addRow(new Object[]{
                     rs.getString("id_pembayaran"),
@@ -291,7 +291,7 @@ public class RiwayatTransaksi extends javax.swing.JPanel {
             System.out.println("Error Load Data: " + e.getMessage());
         }
     }
-
+    
     private void urutData() {
         String order = "";
         switch (txtFilter.getSelectedItem().toString()) {
@@ -313,7 +313,7 @@ public class RiwayatTransaksi extends javax.swing.JPanel {
         }
         loadData(order);
     }
-
+    
     private void cariKasir() {
         String cari = cariKasir.getText();
         // Cari berdasarkan ID atau Username kasir

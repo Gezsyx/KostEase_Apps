@@ -14,12 +14,12 @@ import util.Koneksi;
  *
  * @author ASUS
  */
-public class GrafikPenjualan extends javax.swing.JPanel {
+public class GrafikAnalitik extends javax.swing.JPanel {
 
     /**
      * Creates new form GrafikPenjualan
      */
-    public GrafikPenjualan() {
+    public GrafikAnalitik() {
         initComponents();
         grafikPanel.add(canvas, java.awt.BorderLayout.CENTER); // Pasang canvas ke panel
         setFilterToCurrentDate();
@@ -113,8 +113,8 @@ public class GrafikPenjualan extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                        .addComponent(laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(filterTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
