@@ -183,14 +183,6 @@ public class PreviewKamar extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHargaActionPerformed
 
-    private void txtTipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTipeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTipeActionPerformed
-
-    private void txtStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtStatusActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         txtNo.setText(Pk.getNoKamar());
         txtTipe.setSelectedItem(Pk.getTipe());
@@ -198,9 +190,19 @@ public class PreviewKamar extends javax.swing.JDialog {
         txtDeskripsi.setText(Pk.getDeskripsi());
         this.Link = Pk.getGambar();
         txtStatus.setSelectedItem(Pk.getStatus());
+        txtTipe.setEnabled(false);
+        txtStatus.setEnabled(false);
         loadImage();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
+
+    private void txtStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStatusActionPerformed
+
+    private void txtTipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTipeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTipeActionPerformed
 
     /**
      * @param args the command line arguments
